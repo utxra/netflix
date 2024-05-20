@@ -46,6 +46,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $fnac = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $verificationToken = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -86,6 +89,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return array_unique($roles);
     }
+
+
+    public function getSalt()
+    {
+        // No salt is needed when using bcrypt or argon
+        return null;
+    }
+
 
     /**
      * @param list<string> $roles
@@ -165,6 +176,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setFnac(\DateTimeInterface $fnac): static
     {
         $this->fnac = $fnac;
+
+        return $this;
+    }
+
+    public function getVerificationToken(): ?string
+    {
+        return $this->verificationToken;
+    }
+
+    public function setVerificationToken(?string $verificationToken): static
+    {
+        $this->verificationToken = $verificationToken;
 
         return $this;
     }
