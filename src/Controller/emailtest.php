@@ -1,32 +1,21 @@
 <?php
 
-namespace App\Controller;
+// Include Composer autoload file to load Resend SDK classes...
+require_once 'C:\Users\alumno\Documents\proyecto\netflix\vendor\autoload.php';
 
-use Resend;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Mime\Email;
-use Symfony\Component\Mailer\MailerInterface;
-use Symfony\Component\Routing\Annotation\Route;
+// Assign a new Resend Client instance to $resend variable, which is automatically autoloaded...
+$resend = Resend::client('re_TPPKWAXB_54DKvHzkZi2PArJyAabbQF4C');
 
-require_once __DIR__ . '../../../vendor/autoload.php';
-
-
-class EmailTestController extends AbstractController
-{
-    /**
-     * @Route("/email/test", name="email_test")
-     */
-    public function sendEmailTest(MailerInterface $mailer)
-    {
-        $resend = Resend::client('re_TPPKWAXB_54DKvHzkZi2PArJyAabbQF4C');
-
-        $result = $resend->emails->send([
-            'from' => 'Acme <onboarding@resend.dev>',
-            'to' => ['ruizaviles.franciscojavier@loscerros.org'],
-            'subject' => 'Hello world',
-            'html' => '<strong>It works!</strong>',
-        ]);
-
-        return  $result->toJson();
-    }
+try {
+    $result = $resend->emails->send([
+        'from' => 'Acme <onboarding@resend.dev>',
+        'to' => ['ruizaviles.franciscojavier@loscerros.org'],
+        'subject' => 'Hello world',
+        'html' => '<strong>It works!</strong>',
+    ]);
+} catch (\Exception $e) {
+    exit('Error: ' . $e->getMessage());
 }
+
+// Show the response of the sent email to be saved in a log...
+echo $result->toJson();
