@@ -11,11 +11,14 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Mime\Email;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+
+
 
 class RegistrationController extends AbstractController
 {
     #[Route('/register', name: 'app_register')]
-    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
+    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager, ParameterBagInterface $param): Response
     {
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
@@ -38,13 +41,24 @@ class RegistrationController extends AbstractController
             $entityManager->flush();
 
             // send verification email
-            $email = (new Email())
-                ->from('hello@example.com')
-                ->to($user->getEmail())
-                ->subject('Email Verification')
-                ->text('Please verify your email by clicking on the following link: ' . $this->generateUrl('app_verify_email', ['token' => $token], UrlGeneratorInterface::ABSOLUTE_URL));
 
-            $mailer->send($email);
+            $api_key = $param->get('resend_api_key');
+
+            $resend = Resend::client($api_key);
+
+            try {
+                $result = $resend->emails->send([
+                    'from' => 'Administracion <administracion@franruiz.dev>',
+                    'to' => ['trxpute@gmail.com'],
+                    'subject' => 'Hello world',
+                    'html' => '<strong>It works!</strong>',
+                ]);
+            } catch (\Exception $e) {
+                exit('Error: ' . $e->getMessage());
+            }
+
+            // Show the response of the sent email to be saved in a log...
+            echo $result->toJson();
 
             return $this->redirectToRoute('app_home');
         }
