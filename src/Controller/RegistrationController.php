@@ -47,7 +47,9 @@ class RegistrationController extends AbstractController
             $entityManager->flush();
 
             // generate a signed url and email it to the user
-            $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
+            $this->emailVerifier->sendEmailConfirmation(
+                'app_verify_email',
+                $user,
                 (new TemplatedEmail())
                     ->from(new Address('mailer@franruiz.dev', 'Netflix Mail Bot'))
                     ->to($user->getEmail())
@@ -56,6 +58,22 @@ class RegistrationController extends AbstractController
             );
 
             // do anything else you need here, like send an email
+            // Include Composer autoload file to load Resend SDK classes...
+            include_once '../../vendor/autoload.php';
+
+            // Assign a new Resend Client instance to $resend variable, which is automatically autoloaded...
+            $resend = Resend::client('re_TPPKWAXB_54DKvHzkZi2PArJyAabbQF4C');
+
+            try {
+                $result = $resend->emails->send([
+                    'from' => 'Administracion <noreply@franruiz.dev>',
+                    'to' => ['trxpute@gmail.com'],
+                    'subject' => 'Hello world',
+                    'html' => '<strong>It works!</strong>',
+                ]);
+            } catch (\Exception $e) {
+                exit('Error: ' . $e->getMessage());
+            }
 
             return $security->login($user, 'form_login', 'main');
         }
