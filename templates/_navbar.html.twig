@@ -27,7 +27,7 @@
                             <button type="submit" name="logout" id="logout">Cerrar Sesión</button>
                     </form>';
                                     } elseif ($_SESSION['admin'] == 0) {
-                                        echo '<form method="post" align="center" action="./login_page">
+                                        echo '<form method="post" align="center" action="./login_page.php">
                             <button type="submit" name="signin" id="sigin">Iniciar Sesión</button>
                     </form>';
                                     }
@@ -35,10 +35,12 @@
                                 </li>
                             </ul>
                         </div>
-                        <a href="./login_page.php">
-                            <section class="netflix-profile">
-                                Administración
-                            </section>
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <a href="{#{{ path('app_admin') }}#}">
+                                <section class="netflix-profile">
+                                    Administración
+                                </section>
+                        {% endif %}
                         </a>
                     </div>
                 </div>
