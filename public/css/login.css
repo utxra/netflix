@@ -1,32 +1,36 @@
-body{
-    background-image: linear-gradient(rgba(0, 0, 0, 0.491), rgba(0, 0, 0, 0.416)) , url(../images/login/login-bg.jpeg);
+body {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.491), rgba(0, 0, 0, 0.416)), url(../images/login/login-bg.jpeg);
     height: 100%;
 }
-.login-top{
-    width: 100%;
-    height: 10%;
-    background-color: rgba(0, 0, 0, 0);
-    padding: 0px 20px;
-    display: flex;
+
+.logo {
+    width: 300px;
+    justify-content: center;
     align-items: center;
 }
 
-.login-top img{
-    width: 13%;
+
+@media (max-width: 425px) {
+    .login-box {
+        padding: 25px !important;
+    }
+
+    .logo {
+        margin-top: 50px !important;
+        width: 280px !important;
+    }
 }
 
-
-.login-box{
+.login-box {
     background-color: rgba(0, 0, 0, 0.899);
-    width: 20%;
     border-radius: 1%;
     padding: 50px;
 }
 
-.small-text{
+.small-text {
     font-size: 13px;
 }
 
-.form-control{
+.form-control {
     box-shadow: none !important;
 }

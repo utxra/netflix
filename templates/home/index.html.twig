@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello HomeController!{% endblock %}
+{% block title %}Home{% endblock %}
 
 {% block body %}
 <style>
@@ -8,53 +8,7 @@
     .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
 </style>
 
-{#<nav class="navbar navbar-expand-lg netflix-navbar netflix-padding-left netflix-padding-right">
-            <div class="container-fluid">
-                <div class="netflix-row">
-                    <div class="left d-flex align-items-center">
-                        <a class="navbar-brand" href="./index.php">
-                            <img src="./images/logo.png" alt="">
-                        </a>
-                        <div class="netflix-nav">
-                            <section>
-                                <button><a href="./index.php">Home</a></button>
-                                <button><a href="./peliculas.php">Peliculas</a></button>
-                                <button><a href="./series.php">Series</a></button>
-                            </section>
-                        </div>
-                    </div>
-                    <div class="right d-flex align-items-center">
-                        <i class="bi bi-search"></i>
-                        <div class="netflix-dropdown-box dropdown">
-                            <button class="netflix-dropdown " type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fa-solid fa-user" style="color: #ffffff;"></i>
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                <li class="dropdown-item">
-                                    <?php
-                                    if ($_SESSION['admin'] == 1) {
-                                        echo '<form method="post" align="center" action="./administracion.php">
-                            <button type="submit" name="logout" id="logout">Cerrar Sesión</button>
-                    </form>';
-                                    } elseif ($_SESSION['admin'] == 0) {
-                                        echo '<form method="post" align="center" action="./login_page">
-                            <button type="submit" name="signin" id="sigin">Iniciar Sesión</button>
-                    </form>';
-                                    }
-                                    ?>
-                                </li>
-                            </ul>
-                        </div>
-                        <a href="./login_page.php">
-                            <section class="netflix-profile">
-                                Administración
-                            </section>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </nav>
-#}
+
 <div class="example-wrapper">
     <h1>Hello {{ controller_name }}! ✅</h1>
 

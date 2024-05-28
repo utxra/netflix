@@ -8,8 +8,6 @@
 {% endblock %}
 
 {% block body %}
-        
-                
 
         {#}
         {% if app.user %}
@@ -19,7 +17,8 @@
         {% endif %}
         {#}
 
-    <div class="d-flex justify-content-center align-items-center" style="width: 100vw; height: 100vh;">
+    <div class="d-flex flex-column justify-content-center align-items-center" style="width: 100vw; height: 100vh;">
+        <img src="{{ asset('images/logo/logo.png') }}" alt="logo" class="logo mb-4">
         <section class="login-box">
         <h2 class="text-white">Iniciar sesión</h2>
             <form method="POST" class="">
@@ -54,6 +53,17 @@
                 <input type="hidden" name="_csrf_token"
                 value="{{ csrf_token('authenticate') }}"
                 >
+
+                {#
+                <div class="text-center mt-3">
+                    <a href="{{ path('app_forgot_password_request') }}" class="text-white">Forgot your password?</a>
+                </div>
+                #}
+
+                <div class="text-center mt-3">
+                    <a href="{{ path('app_register') }}" class="text-white">¿No tienes cuenta? Regístrate</a>
+                </div>
+
             </form>
         </section>
     </div>
