@@ -2,25 +2,75 @@
 
 {% block title %}Register{% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/login.css') }}">
+{% endblock %}
+
 {% block body %}
+    
+    {% block header %}
+    {% endblock %}
+
     {% for flash_error in app.flashes('verify_email_error') %}
         <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
     {% endfor %}
 
-    <h1>Register</h1>
+    <div class="d-flex flex-column justify-content-center align-items-center" style="width: 100vw; height: 100vh;">
+        <img src="{{ asset('images/logo/logo.png') }}" alt="logo" class="logo mb-4">
+        <section class="login-box">
+        <h2 class="text-white">Regístrate</h2>
+            {{ form_errors(registrationForm) }}
 
-    {{ form_errors(registrationForm) }}
+            {{ form_start(registrationForm) }}
+                <div class="mb-3 bg-white rounded px-2">
+            
+                    {{ form_label(registrationForm.nombre, 'Nombre', { 'label_attr': {'class': 'form_label small_text'}}) }}
+                    {{ form_row(registrationForm.nombre, { 'label': false, 'attr': {'class': 'form-control border-0 p-0'}}) }}
+                
+                </div>
+                
+                <div class="mb-3 bg-white rounded px-2">
+                    
+                    {{ form_label(registrationForm.apellidos, 'Apellidos', { 'label_attr': {'class': 'form_label small_text'}}) }}
+                    {{ form_row(registrationForm.apellidos, { 'label': false, 'attr': {'class': 'form-control border-0 p-0'}}) }}
 
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.nombre) }}
-        {{ form_row(registrationForm.apellidos) }}
-        {{ form_row(registrationForm.fnac) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
+                </div>
 
-        <button type="submit" class="btn">Register</button>
-    {{ form_end(registrationForm) }}
+                <div class="mb-3 bg-white rounded px-2">
+                    
+                    {{ form_label(registrationForm.fnac, 'Fecha de nacimiento', { 'label_attr': {'class': 'form_label small_text'}}) }}
+                    {{ form_row(registrationForm.fnac, { 'label': false, 'attr': {'class': 'form-control border-0 p-0'}}) }}
+                    
+                </div>
+
+                <div class="mb-3 bg-white rounded px-2">
+                    
+                    {{ form_label(registrationForm.email, 'Email', { 'label_attr': {'class': 'form_label small_text'}}) }}
+                    {{ form_row(registrationForm.email, { 'label': false, 'attr': {'class': 'form-control border-0 p-0'}}) }}
+                    
+                </div>
+
+                <div class="mb-3 bg-white rounded px-2">
+                    
+                    {{ form_label(registrationForm.plainPassword, 'Contraseña', { 'label_attr': {'class': 'form_label small_text'}}) }}
+                    {{ form_row(registrationForm.plainPassword, { 'label': false, 'attr': {'class': 'form-control border-0 p-0'}}) }}
+                </div>
+                
+                <div class="checkbox mb-3 text-white">
+                        {{ form_widget(registrationForm.agreeTerms) }}
+                        {{ form_label(registrationForm.agreeTerms, 'Acepto los términos y condiciones', { 'label_attr': {'class': 'text-white'} }) }}
+                </div>
+
+                <input type="hidden" name="_csrf_token"
+                value="{{ csrf_token('authenticate') }}"
+                >
+
+                <button type="submit" class="btn btn-danger mt-3" style="width: 100%;">Register</button>
+
+            {{ form_end(registrationForm) }}
+
+        </section>
+    </div>
+
 {% endblock %}

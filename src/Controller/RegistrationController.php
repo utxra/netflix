@@ -56,7 +56,7 @@ class RegistrationController extends AbstractController
                     ->subject('Please Confirm your Email')
                     ->htmlTemplate('registration/confirmation_email.html.twig')
             );
-
+/*
             // do anything else you need here, like send an email
             // Include Composer autoload file to load Resend SDK classes...
             include_once '../../vendor/autoload.php';
@@ -74,7 +74,7 @@ class RegistrationController extends AbstractController
             } catch (\Exception $e) {
                 exit('Error: ' . $e->getMessage());
             }
-
+*/
             return $security->login($user, 'form_login', 'main');
         }
 

@@ -9,13 +9,16 @@
 
 {% block body %}
 
-        {#}
-        {% if app.user %}
-            <div class="mb-3">
-                You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
-            </div>
-        {% endif %}
-        {#}
+    {% block header %}
+    {% endblock %}
+
+    {#}
+    {% if app.user %}
+        <div class="mb-3">
+            You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
+        </div>
+    {% endif %}
+    {#}
 
     <div class="d-flex flex-column justify-content-center align-items-center" style="width: 100vw; height: 100vh;">
         <img src="{{ asset('images/logo/logo.png') }}" alt="logo" class="logo mb-4">
@@ -41,18 +44,17 @@
 
                 </div>
 
-                <div class="checkbox mb-3">
+                <div title="El sistema solo te recordará durante una semana" class="checkbox mb-3">
                     <label class="text-white">
                         <input type="checkbox" name="_remember_me"> Remember me
                     </label>
                 </div>
-                
-                
-                <button type="submit" class="btn btn-danger mt-3" style="width: 100%;">Sign In</button>
         
                 <input type="hidden" name="_csrf_token"
                 value="{{ csrf_token('authenticate') }}"
                 >
+
+                <button type="submit" class="btn btn-danger mt-3" style="width: 100%;">Sign In</button>
 
                 {#
                 <div class="text-center mt-3">
