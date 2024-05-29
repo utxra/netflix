@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
@@ -19,7 +20,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?int $id = null;
 
+    
     #[ORM\Column(length: 180)]
+    #[Assert\Email(
+        message: "El email '{{ value }}' no es un email válido."
+    )]
+    #[Assert\NotBlank(
+        message: 'El email no puede estar vacío.'
+    )]
     private ?string $email = null;
 
     /**
@@ -32,18 +40,61 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var string The hashed password
      */
     #[ORM\Column]
+    #[Assert\Length(
+        min: 8,
+        minMessage: 'La contraseña debe tener al menos {{ limit }} caracteres.'
+    )]
+    #[Assert\Regex(
+        pattern: '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/',
+        message: 'La contraseña debe contener al menos una letra mayúscula, una letra minúscula, un número y un carácter especial.'
+    )]
+    #[Assert\NotBlank(
+        message: 'La contraseña no puede estar vacía.'
+    )]
+    #[Assert\NotCompromisedPassword(
+        message: 'La contraseña es demasiado común.'
+    )]
     private ?string $password = null;
 
     #[ORM\Column]
     private bool $isVerified = false;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Length(
+        min: 2,
+        minMessage: 'El nombre debe tener al menos {{ limit }} caracteres.'
+    )]
+    #[Assert\Regex(
+        pattern: '/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/',
+        message: 'El nombre solo puede contener letras y espacios.'
+    )]
+    #[Assert\NotBlank(
+        message: 'El nombre no puede estar vacío.'
+    )]
     private ?string $nombre = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Length(
+        min: 2,
+        minMessage: 'Los apellidos deben tener al menos {{ limit }} caracteres.'
+    )]
+    #[Assert\Regex(
+        pattern: '/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/',
+        message: 'Los apellidos solo pueden contener letras y espacios.'
+    )]
+    #[Assert\NotBlank(
+        message: 'Los apellidos no pueden estar vacíos.'
+    )]
     private ?string $apellidos = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Assert\LessThan(
+        value: '-18 years',
+        message: 'Debes tener al menos 18 años para registrarte.'
+    )]
+    #[Assert\NotBlank(
+        message: 'La fecha de nacimiento no puede estar vacía.'
+    )]
     private ?\DateTimeInterface $fnac = null;
 
     #[ORM\Column(length: 255, nullable: true)]

@@ -35,6 +35,14 @@ class RegistrationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            //Check if birthdate is not null
+            if ($user->getFnac() === null) {
+                $this->addFlash('error', 'La fecha de nacimiento es obligatoria.');
+                return $this->render('registration/register.html.twig', [
+                    'registrationForm' => $form->createView(),
+                ]);
+            }
+            
             // encode the plain password
             $user->setPassword(
                 $userPasswordHasher->hashPassword(
@@ -42,6 +50,14 @@ class RegistrationController extends AbstractController
                     $form->get('plainPassword')->getData()
                 )
             );
+
+            // set the roles
+            $user->setRoles(['ROLE_USER']);
+
+            // Add some logging
+            error_log(print_r($user, true));
+
+
 
             $entityManager->persist($user);
             $entityManager->flush();

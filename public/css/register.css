@@ -1,0 +1,54 @@
+body {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.491), rgba(0, 0, 0, 0.416)),
+    url(../images/login/login-bg.jpeg);
+  height: 100%;
+}
+
+.logo {
+  width: 300px;
+  justify-content: center;
+  align-items: center;
+}
+
+@media (max-width: 425px) {
+  .login-box {
+    padding: 25px !important;
+  }
+
+  .logo {
+    margin-top: 50px !important;
+    width: 280px !important;
+  }
+}
+
+.login-box {
+  background-color: rgba(0, 0, 0, 0.899);
+  border-radius: 1%;
+  padding: 50px;
+}
+
+.small-text {
+  font-size: 13px;
+}
+
+.form-control {
+  box-shadow: none !important;
+}
+
+div > .alert {
+  margin-left: -8px;
+  margin-right: -8px;
+}
+
+ul {
+  color: #842029 !important;
+  font-family: var(--bs-font-sans-serif) !important;
+  font-size: 1rem !important;
+  font-weight: 400 !important;
+  line-height: 1.5 !important;
+}
+
+div.mb-3 > div > ul {
+  padding-left: 0px;
+  margin-bottom: 0px;
+}
