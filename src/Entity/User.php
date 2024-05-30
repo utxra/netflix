@@ -92,6 +92,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         value: '-18 years',
         message: 'Debes tener al menos 18 años para registrarte.'
     )]
+    #[Assert\GreaterThan(
+        value: '-130 years',
+        message: 'La fecha de nacimiento no puede ser mayor a 130 años.'
+    )]
     #[Assert\NotBlank(
         message: 'La fecha de nacimiento no puede estar vacía.'
     )]
