@@ -35,11 +35,13 @@
                                 </li>
                             </ul>
                         </div>
+                        
                         {% if is_granted('ROLE_ADMIN') %}
-                            <a href="{#{{ path('app_admin') }}#}">
-                                <section class="netflix-profile">
-                                    Administración
-                                </section>
+                            <div class="netflix-nav">
+                            <section>
+                                <button><a href="{{ path('admin') }}">Admin Dashboard</a></button>
+                            </section>
+                            </div>
                         {% endif %}
                         </a>
                     </div>

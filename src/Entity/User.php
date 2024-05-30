@@ -104,6 +104,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $verificationToken = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $avatar = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -243,6 +246,32 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setVerificationToken(?string $verificationToken): static
     {
         $this->verificationToken = $verificationToken;
+
+        return $this;
+    }
+
+    public function getAvatar(): ?string
+    {
+        return $this->avatar;
+    }
+
+    public static function getAvatarChoices(): array
+    {
+        return [
+            'Avatar 1' => '1',
+            'Avatar 2' => '2',
+            'Avatar 3' => '3',
+            'Avatar 4' => '4',
+            'Avatar 5' => '5',
+            'Avatar 6' => '6',
+            'Avatar 7' => '7',
+            'Avatar 8' => '8',
+        ];
+    }
+
+    public function setAvatar(?string $avatar): static
+    {
+        $this->avatar = $avatar;
 
         return $this;
     }
