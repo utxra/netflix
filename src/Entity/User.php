@@ -42,6 +42,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     #[Assert\Length(
         min: 8,
+        max: 24,
         minMessage: 'La contraseña debe tener al menos {{ limit }} caracteres.'
     )]
     #[Assert\Regex(
@@ -258,14 +259,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public static function getAvatarChoices(): array
     {
         return [
-            'Avatar 1' => '1',
-            'Avatar 2' => '2',
-            'Avatar 3' => '3',
-            'Avatar 4' => '4',
-            'Avatar 5' => '5',
-            'Avatar 6' => '6',
-            'Avatar 7' => '7',
-            'Avatar 8' => '8',
+            'avatar1' => 'images/avatar/avatar1.png',
+            'avatar2' => 'images/avatar/avatar2.png',
+            'avatar3' => 'images/avatar/avatar3.png',
+            'avatar4' => 'images/avatar/avatar4.png',
+            'avatar5' => 'images/avatar/avatar5.png',
+            'avatar6' => 'images/avatar/avatar6.png',
+            'avatar7' => 'images/avatar/avatar7.png',
+            'avatar8' => 'images/avatar/avatar8.png',
         ];
     }
 

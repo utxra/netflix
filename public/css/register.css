@@ -10,7 +10,7 @@ body {
   align-items: center;
 }
 
-@media (max-width: 425px) {
+@media (max-width: 570px) {
   .login-box {
     padding: 25px !important;
   }
@@ -19,6 +19,8 @@ body {
     margin-top: 50px !important;
     width: 280px !important;
   }
+
+
 }
 
 .login-box {
@@ -51,4 +53,23 @@ ul {
 div.mb-3 > div > ul {
   padding-left: 0px;
   margin-bottom: 0px;
+}
+
+[type=radio] { 
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+[type=radio] + img {
+  cursor: pointer;
+}
+
+[type=radio]:checked + img {
+  outline: 2px solid #fff;
+}
+
+.avatares label {
+  padding: 5px;
 }

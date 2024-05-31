@@ -18,7 +18,7 @@
 
     <div class="d-flex flex-column justify-content-center align-items-center" style="width: 100vw; height: 100vh;">
         <img src="{{ asset('images/logo/logo.png') }}" alt="logo" class="logo mb-4">
-        <section class="login-box">
+        <section class="login-box" style="max-width: 550px;">
         <h2 class="text-white">Regístrate</h2>
 
             {{ form_start(registrationForm) }}
@@ -66,7 +66,8 @@
                     
                     {{ form_label(registrationForm.plainPassword.first, 'Contraseña', { 'label_attr': {'class': 'form_label small_text'}}) }}
                     {{ form_widget(registrationForm.plainPassword.first, { 'label': false, 'attr': {'class': 'form-control border-0 p-0'}}) }}
-                    
+                    <div class="small-text">La contraseña debe tener entre 8 y 24 carácteres. Debe contener al menos una letra mayúscula, una letra minúscula, un número y un carácter especial.</div>
+
                     {% if form_errors(registrationForm.plainPassword.first) %}
                     <div class="alert alert-danger rounded px-2">{{ form_errors(registrationForm.plainPassword.first) }}</div>
                     {% endif %}
@@ -87,17 +88,41 @@
                     {{ form_label(registrationForm.agreeTerms, 'Acepto los términos y condiciones', { 'label_attr': {'class': 'text-white'} }) }}
                 </div>
 
+                
+                <div class="mb-3 rounded px-2">
+                    
+                    {{ form_label(registrationForm.avatar, 'Selecciona un avatar', { 'label_attr': {'class': 'text-white mb-3 h5'}}) }}
+                    <br>
+                    <div class="d-flex justify-content-center align-items-center avatares">
+                    {% for avatar in registrationForm.avatar %}
+                        <label>
+                            {{ form_widget(avatar, { 'label': false }) }}
+                            <img src="{{ asset('images/avatar/' ~ avatar.vars.value ~ '.png') }}" width="50px" alt="avatar" class="avatar">
+                        </label>
+                    {% endfor %}
+                    </div>                   
+                    {% if form_errors(registrationForm.avatar) %}
+                        <div class="alert alert-danger rounded px-2">{{ form_errors(registrationForm.plainPassword.avatar) }}</div>
+                    {% endif %}
+
+                </div>
+
                 <input type="hidden" name="_csrf_token"
-                value="{{ csrf_token('authenticate') }}"
-                >
+                    value="{{ csrf_token('authenticate') }}"
+                    >
 
                 <button type="submit" class="btn btn-danger mt-3" style="width: 100%;">Register</button>
 
-            {{ form_end(registrationForm) }}
                 <div class="text-center mt-3">
                     <a href="{{ path('app_login') }}" class="text-white small-text">¿Ya tienes cuenta? Inicia sesión</a>
                 </div>
+            
+            {{ form_end(registrationForm) }}
+        
         </section>
+        
+        
+
     </div>
 
 {% endblock %}
