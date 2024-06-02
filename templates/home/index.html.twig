@@ -1,4 +1,5 @@
 {% extends 'base.html.twig' %}
+{% use '@EasyAdmin/layout.html.twig' %}
 
 {% block title %}Home{% endblock %}
 
@@ -7,5 +8,15 @@
 {% endblock %}
 
 {% block body %}
-
+    <div class="container">
+        <h1>Home Page</h1>
+        
+        <!-- Render the EasyAdmin UserMenu -->
+        {% block user_menu %}
+            {{ easyadmin_render_user_menu() }}
+        {% endblock %}
+        
+        <!-- Aquí va el resto del contenido de tu página -->
+    </div>
 {% endblock %}
+ 

@@ -1,0 +1,10 @@
+easy_admin:
+    design:
+        menu:
+            - { entity: 'App\Entity\User', label: 'Users', icon: 'user' }
+    user_menu:
+        name: 'username'
+        avatar_url: 'avatarUrl'
+        menu_items:
+            - { type: 'link', label: 'My Profile', route: 'profile' }
+            - { type: 'link', label: 'Logout', route: 'app_logout' }

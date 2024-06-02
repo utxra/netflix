@@ -10,6 +10,11 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
+interface MyUserInterface extends UserInterface
+{
+    public function getNombre(): ?string;
+}
+
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
@@ -36,9 +41,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private array $roles = [];
 
-    /**
-     * @var string The hashed password
-     */
     #[ORM\Column]
     #[Assert\Length(
         min: 8,
@@ -48,12 +50,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\Regex(
         pattern: '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/',
         message: 'La contraseña debe contener al menos una letra mayúscula, una letra minúscula, un número y un carácter especial.'
-    )]
-    #[Assert\NotBlank(
-        message: 'La contraseña no puede estar vacía.'
-    )]
-    #[Assert\NotCompromisedPassword(
-        message: 'La contraseña es demasiado común.'
     )]
     private ?string $password = null;
 
@@ -258,7 +254,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public static function getAvatarChoices(): array
     {
-        return [
+        return [    
             'avatar1' => 'images/avatar/avatar1.png',
             'avatar2' => 'images/avatar/avatar2.png',
             'avatar3' => 'images/avatar/avatar3.png',
@@ -268,6 +264,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             'avatar7' => 'images/avatar/avatar7.png',
             'avatar8' => 'images/avatar/avatar8.png',
         ];
+    }
+
+    public function getAvatarUrl(): ?string
+    {
+        return $this->avatar ? self::getAvatarChoices()[$this->avatar] : null;
     }
 
     public function setAvatar(?string $avatar): static

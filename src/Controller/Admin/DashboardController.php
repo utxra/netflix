@@ -18,7 +18,9 @@ use App\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
+use EasyCorp\Bundle\EasyAdminBundle\Config\UserMenu;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class DashboardController extends AbstractDashboardController
 {
@@ -54,6 +56,16 @@ class DashboardController extends AbstractDashboardController
             ->setTitle('Netflix Admin Dashboard')
             ->setFaviconPath('images/favicon/favicon.ico')
             ->setTranslationDomain('my-custom-domain');
+    }
+
+    public function configureUserMenu(UserInterface $user): UserMenu
+    {
+        if (!$user instanceof User) {
+            throw new \Exception('Wrong user');
+        }
+
+        return parent::configureUserMenu($user)
+            ->setAvatarUrl($user->getAvatarUrl());
     }
 
     public function configureMenuItems(): iterable
