@@ -1,40 +1,92 @@
 <nav class="navbar navbar-expand-lg netflix-navbar netflix-padding-left netflix-padding-right">
     <div class="container-fluid">
-        <div class="netflix-row">
-            <div class="left d-flex align-items-center">
-                <a class="navbar-brand" href="./index.php">
-                    <img src="{{ asset('images/logo/logo.png') }}" alt="Logo">
-                </a>
-                <div class="netflix-nav">
-                    <section>
-                        <button><a href="{{ path('app_home') }}">Home</a></button>
-                        <button><a href="./peliculas.php">Peliculas</a></button>
-                        <button><a href="./series.php">Series</a></button>
-                    </section>
-                </div>
-            </div>
-            {# <div class="left d-flex align-items-center">
-                <div class="dropdown netflix-dropdown-box">
-                    <button class="dropdown-toggle netflix-dropdown" type="button"
-                        id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: unset !important;">
-                        <img src="images/avatar/{{app.user.avatar}}.png" style="width: 40px; border-radius: 5px;">
-                        <span class="text-white m-1">{{app.user.nombre}}</span>
+        
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <div class="dropdown-header">
-                            <span class="text-white m-1 left">{{app.user.nombre}}</span>
-                            <img src="images/avatar/{{app.user.avatar}}.png" class="right" style="width: 60px; border-radius: 5px;">
+        <a class="navbar-brand" href="{{ path('app_home') }}">
+            <img src="{{ asset('images/logo/logo.png') }}" alt="Logo">
+        </a>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('app_home') }}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="./peliculas.php">Peliculas</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="./series.php">Series</a>
+                </li>
+            </ul>
+
+        </div>
+
+        <div class="navbar-custom-menu" id="user_menu_desktop">
+            <div class="dropdown user-menu-wrapper ">
+                <a class="user-details" type="button" data-bs-toggle="dropdown" data-bs-offset="0,5"
+                    aria-expanded="false">
+                    <img class="user-avatar" src="images/avatar/avatar1.png" />
+                    <span class="user-name">admin@admin.es</span>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end">
+                    <li class="dropdown-user-details">
+                        <div>
+                            <img class="user-avatar" src="images/avatar/avatar1.png" />
                         </div>
-                        <a class="dropdown-item" href="{{ path('app_profile') }}">Perfil</a>
-                        {% if is_granted('ROLE_ADMIN') %}
-                        <a class="dropdown-item" href="{{ path('admin') }}">Admin Dashboard</a>
-                        {% endif %}
-                        <a class="dropdown-item" href="{{ path('app_logout') }}">Cerrar sesión</a>
+                        <div>
+                            <span class="user-label">Logged in as</span>
+                            <span class="user-name">admin@admin.es</span>
+                        </div>
+                    </li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li>
+                        <a href="{{ path('admin') }}" class="dropdown-item user-action " target="_self" rel=""
+                            referrerpolicy="origin-when-cross-origin">
+                            <i class="fa-fw fa fa-dashboard"></i>Admin Dashboard
+                        </a>
+                        <a href="{{ path('app_logout') }}" class="dropdown-item user-action " target="_self" rel=""
+                            referrerpolicy="origin-when-cross-origin">
+                            <i class="fa fa-fw fa-sign-out"></i>Cerrar sesión
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="dropdown user-menu-wrapper ms-auto" id="user_menu_mobile">
+            <a class="user-details" type="button" data-bs-toggle="dropdown" data-bs-offset="0,5" aria-expanded="false">
+                <img class="user-avatar" src="images/avatar/avatar1.png">
+
+            </a>
+
+            <ul class="dropdown-menu dropdown-menu-end">
+                <li class="dropdown-user-details">
+                    <div> <img class="user-avatar" src="images/avatar/avatar1.png">
                     </div>
-                </div>
-            </div> #}
-            
+                    <div>
+                        <span class="user-label">Logged in as</span>
+                        <span class="user-name">admin@admin.es</span>
+                    </div>
+                </li>
+
+                <li>
+                    <hr class="dropdown-divider">
+                </li>
+                <li>
+                </li>
+                <li>
+                    <a href="/logout" class="dropdown-item user-action " target="_self" rel=""
+                        referrerpolicy="origin-when-cross-origin">
+                        <i class="fa fa-fw fa-sign-out"></i> Sign out
+                    </a>
+                </li>
+            </ul>
         </div>
     </div>
 </nav>

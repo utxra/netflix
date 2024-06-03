@@ -360,35 +360,27 @@ a:visited:active {
   color: #fff;
 }
 
-.custom-dropdown .dropdown-toggle::after {
-  /* Esto es para la flecha del menú desplegable */
-  border-top-color: #fff; /* Cambia esto al color que quieras para la flecha */
-}
-.custom-dropdown .dropdown-menu {
-  /* Esto es para el menú desplegable en sí */
-  background-color: #333; /* Cambia esto al color que quieras para el fondo */
-  border-radius: 5px; /* Esto es para las esquinas redondeadas */
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Esto es para la sombra alrededor del menú */
-  margin-top: 10px; /* Esto es para el espacio entre el botón y el menú */
+.content-top {
+  box-shadow: none;
 }
 
-.custom-dropdown .dropdown-menu::before {
-  /* Esto es para la flecha que apunta al origen del menú */
-  content: "";
-  position: absolute;
-  top: -5px; /* Esto posiciona la flecha justo encima del menú */
-  left: 20px; /* Esto posiciona la flecha a la izquierda. Cambia esto para mover la flecha */
-  border-width: 0 5px 5px; /* Esto hace que la flecha sea un triángulo */
-  border-style: solid;
-  border-color: transparent transparent #333 transparent; /* Esto hace que la flecha sea del mismo color que el fondo del menú */
+#user_menu_mobile {
+  display: none;
 }
 
-.custom-dropdown .dropdown-item {
-  /* Esto es para los elementos individuales del menú */
-  color: #fff; /* Cambia esto al color que quieras para el texto */
+@media (max-width: 992px) {
+  #user_menu_mobile {
+    display: block;
+  } 
+  #user_menu_desktop {
+    display: none;
+  }
 }
 
-.custom-dropdown .dropdown-item:hover {
-  /* Esto es para los elementos del menú cuando se pasa el ratón por encima */
-  background-color: #555; /* Cambia esto al color que quieras para el fondo cuando se pasa el ratón por encima */
-} 
+.navbar-toggler {
+  border-color: #fff;
+}
+
+.navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3E%3Cpath stroke='rgba(0, 0, 0, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+}
