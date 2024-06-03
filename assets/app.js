@@ -8,3 +8,17 @@ import './bootstrap.js';
 import './styles/app.css';
 
 console.log('This log comes from assets/app.js - welcome to AssetMapper! 🎉');
+
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.navbar a').forEach(function(element) {
+      element.addEventListener('click', function() {
+        location.reload();
+      });
+    });
+  });
+
+  window.addEventListener('load', function() {
+    if (window.location.pathname === '/') {
+      document.body.style.backgroundImage = 'none';
+    }
+  });

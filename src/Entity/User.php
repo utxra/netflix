@@ -100,7 +100,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $verificationToken = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(length: 255, nullable: true, options: ["default" => "images/avatar/default.png"])]
     private ?string $avatar = null;
 
     public function getId(): ?int

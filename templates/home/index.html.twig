@@ -3,7 +3,12 @@
 {% block title %}Home{% endblock %}
 
 {% block stylesheets %}
-<link href="{{ asset('css/base.css') }}" rel="stylesheet">
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/base.css') }}">
+{% endblock %}
+
+{% block header %}
+    {% include '_navbar.html.twig' %}
 {% endblock %}
 
 {% block body %}

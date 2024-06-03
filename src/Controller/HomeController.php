@@ -27,6 +27,7 @@ class HomeController extends AbstractDashboardController
 
         return $this->render('home/index.html.twig', [
             'controller_name' => 'HomeController',
+            'avatar' => $user->getAvatarUrl(),
         ]);
     }
 }

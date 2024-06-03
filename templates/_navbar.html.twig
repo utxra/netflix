@@ -1,4 +1,8 @@
-<nav class="navbar navbar-expand-lg netflix-navbar netflix-padding-left netflix-padding-right">
+{% if avatar == null %}
+    {% set avatar = asset('images/avatar/default.png') %}
+{% endif %}
+
+<nav class="navbar navbar-expand-lg netflix-navbar netflix-padding-left netflix-padding-right ea-dark-scheme">
     <div class="container-fluid">
         
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -27,15 +31,15 @@
 
         <div class="navbar-custom-menu" id="user_menu_desktop">
             <div class="dropdown user-menu-wrapper ">
-                <a class="user-details" type="button" data-bs-toggle="dropdown" data-bs-offset="0,5"
+                <button class="user-details" type="button" data-bs-toggle="dropdown" data-bs-offset="0,5"
                     aria-expanded="false">
-                    <img class="user-avatar" src="images/avatar/avatar1.png" />
+                    <img class="user-avatar" src="{{ avatar }}" />
                     <span class="user-name">admin@admin.es</span>
-                </a>
+                </button>
                 <ul class="dropdown-menu dropdown-menu-end">
                     <li class="dropdown-user-details">
                         <div>
-                            <img class="user-avatar" src="images/avatar/avatar1.png" />
+                            <img class="user-avatar" src="{{ avatar }}" />
                         </div>
                         <div>
                             <span class="user-label">Logged in as</span>
@@ -61,13 +65,13 @@
         
         <div class="dropdown user-menu-wrapper ms-auto" id="user_menu_mobile">
             <a class="user-details" type="button" data-bs-toggle="dropdown" data-bs-offset="0,5" aria-expanded="false">
-                <img class="user-avatar" src="images/avatar/avatar1.png">
+                <img class="user-avatar" src="{{ avatar }}">
 
             </a>
 
             <ul class="dropdown-menu dropdown-menu-end">
                 <li class="dropdown-user-details">
-                    <div> <img class="user-avatar" src="images/avatar/avatar1.png">
+                    <div> <img class="user-avatar" src="{{ avatar }}">
                     </div>
                     <div>
                         <span class="user-label">Logged in as</span>
@@ -81,9 +85,13 @@
                 <li>
                 </li>
                 <li>
-                    <a href="/logout" class="dropdown-item user-action " target="_self" rel=""
+                    <a href="{{ path('admin') }}" class="dropdown-item user-action " target="_self" rel=""
                         referrerpolicy="origin-when-cross-origin">
-                        <i class="fa fa-fw fa-sign-out"></i> Sign out
+                        <i class="fa-fw fa fa-dashboard"></i>Admin Dashboard
+                    </a>
+                    <a href="{{ path('app_logout') }}" class="dropdown-item user-action " target="_self" rel=""
+                        referrerpolicy="origin-when-cross-origin">
+                        <i class="fa fa-fw fa-sign-out"></i>Cerrar sesión
                     </a>
                 </li>
             </ul>
