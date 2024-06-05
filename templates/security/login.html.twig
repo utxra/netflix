@@ -12,14 +12,6 @@
     {% block header %}
     {% endblock %}
 
-    {#}
-    {% if app.user %}
-        <div class="mb-3">
-            You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
-        </div>
-    {% endif %}
-    {#}
-
     <div class="d-flex flex-column justify-content-center align-items-center" style="width: 100vw; height: 100vh;">
         <img src="{{ asset('images/logo/logo.png') }}" alt="logo" class="logo mb-4">
         <section class="login-box">
@@ -55,12 +47,10 @@
                 >
 
                 <button type="submit" class="btn btn-danger mt-3" style="width: 100%;">Sign In</button>
-
-                {#
+                
                 <div class="text-center mt-3">
-                    <a href="{{ path('app_forgot_password_request') }}" class="text-white">Forgot your password?</a>
+                    <a href="{{ path('app_forgot_password_request') }}" class="text-white">¿Has olvidado tu contraseña? Pulsa aquí</a>
                 </div>
-                #}
 
                 <div class="text-center mt-3">
                     <a href="{{ path('app_register') }}" class="text-white small-text">¿No tienes cuenta? Regístrate</a>

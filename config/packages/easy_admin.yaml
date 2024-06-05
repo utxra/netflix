@@ -6,5 +6,4 @@ easy_admin:
         name: 'username'
         avatar_url: 'avatarUrl'
         menu_items:
-            - { type: 'link', label: 'My Profile', route: 'profile' }
             - { type: 'link', label: 'Logout', route: 'app_logout' }

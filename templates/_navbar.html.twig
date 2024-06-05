@@ -45,7 +45,7 @@ endif %}
 					aria-expanded="false"
 				>
 					<img class="user-avatar" src="{{ avatar }}" />
-					<span class="user-name">admin@admin.es</span>
+					<span class="user-name">{{ app.user.email }}</span>
 				</button>
 				<ul class="dropdown-menu dropdown-menu-end">
 					<li class="dropdown-user-details">
@@ -53,8 +53,8 @@ endif %}
 							<img class="user-avatar" src="{{ avatar }}" />
 						</div>
 						<div>
-							<span class="user-label">Logged in as</span>
-							<span class="user-name">admin@admin.es</span>
+							<span class="user-label">Has iniciado sesión con</span>
+							<span class="user-name">{{ app.user.email }}</span>
 						</div>
 					</li>
 					<li>
@@ -77,6 +77,7 @@ endif %}
 						<hr class="dropdown-divider" />
 					</li>
 					<li>
+						{% if is_granted('ROLE_ADMIN') %}
 						<a
 							href="{{ path('admin') }}"
 							class="dropdown-item user-action"
@@ -86,6 +87,7 @@ endif %}
 						>
 							<i class="fa-fw fa fa-dashboard"></i>Admin Dashboard
 						</a>
+						{% endif %}
 						<a
 							href="{{ path('app_logout') }}"
 							class="dropdown-item user-action"
@@ -118,8 +120,8 @@ endif %}
 					<img class="user-avatar" src="{{ avatar }}" />
 				</div>
 				<div>
-					<span class="user-label">Logged in as</span>
-					<span class="user-name">admin@admin.es</span>
+					<span class="user-label">Has iniciado sesión con</span>
+					<span class="user-name">{{ app.user.email }}</span>
 				</div>
 			</li>
 			<li>
@@ -140,6 +142,7 @@ endif %}
 				<hr class="dropdown-divider" />
 			</li>
 			<li>
+				{% if is_granted('ROLE_ADMIN') %}
 				<a
 					href="{{ path('admin') }}"
 					class="dropdown-item user-action"
@@ -149,6 +152,7 @@ endif %}
 				>
 					<i class="fa-fw fa fa-dashboard"></i>Admin Dashboard
 				</a>
+				{% endif %}
 				<a
 					href="{{ path('app_logout') }}"
 					class="dropdown-item user-action"
