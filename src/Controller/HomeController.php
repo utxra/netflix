@@ -51,6 +51,7 @@ class HomeController extends AbstractDashboardController
         // Extraer los datos necesarios
         $peliculas = array_map(function ($pelicula) {
             return [
+                'id' => $pelicula['id'], // Esto puede ser útil para enlaces a 'detalles de la película
                 'title' => $pelicula['title'],
                 'description' => $pelicula['overview'],
                 'image' => 'https://image.tmdb.org/t/p/w500' . $pelicula['poster_path'],

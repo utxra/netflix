@@ -10,18 +10,69 @@
 {% endblock %}
 
 {% block body %}
-    <h2 class="text-white">Películas</h2>
-    <div class="container-fluid d-flex flex-wrap justify-content-center">
-    {% for pelicula in peliculas %}
-        <div class="card">
-            <img src="{{ pelicula.image }}" width="200px" alt="Imagen {{ pelicula.title }}">
-            <div class="container">
-                <h4><b>{{ pelicula.title }}</b></h4>
-                <p>{{ pelicula.description }}</p>
-                <p>{{ pelicula.release_date }}</p>
-                <p>Géneros: {{ pelicula.genres|join(', ') }}</p>
-            </div>
+
+    <div class="card" style="width: 400px;">
+                <img src="{{ pelicula.image }}" class="card-img-top"  alt="Imagen {{ pelicula.title }}">
+                <div class="card-body">
+                    <section class="d-flex justify-content-between">
+                    <div>
+                        <a href=""><i class="bi bi-play-circle-fill card-icon"></i></a>
+                        <button class="bi bi-info-circle card-icon" style="color: black;" id="btn-abrir-info-peliculas-{{ pelicula.id }}"></button>
+                        <dialog id="info-peliculas-{{ pelicula.id }}" class="info">
+                        <div class="">
+                            <section class="netflix-home-video">
+                                <button class="btn-close btn-close-white btn-cerrar-info" id="btn-cerrar-info-peliculas-{{ pelicula.id }}"></button>
+                                <img src="{{ pelicula.image }}" style="width: 100%;">
+                                <div class="bottom"></div>
+                                <div class="content">
+                                <section class="left">
+                                    <h1 style="margin-top: 80%;" class="info-titulo">{{ pelicula.title }}</h1>
+                                    <div class="d-flex mt-2">
+                                    <a href=""><button class="btn btn-light m-2"> <i class="bi bi-play-fill" style="color: black; padding: 0%;"></i>
+                                        Reproducir </button></a>
+                                    </div>
+                                </section>
+                                </div>
+                            </section>
+                        </div>
+                        <div class="info-contenido m-5 row">
+                            <div class="col d-flex align-items-center">
+                                <h1>Sinopsis</h1>
+                                <div class="duracion">Fecha {{ pelicula.release_date }} ? min</div>
+                            </div>
+                            <div>
+                                <p style="text-align: justify;">{{ pelicula.description }}</p>
+                                <p><b>Reparto: </b> , etc.</p>
+                            </div>
+                        </div>
+                        </dialog>
+                    </div>
+                    <div>
+                        <a href="" download><i class="bi bi-arrow-down-circle card-icon"></i></a>
+                    </div>
+                    </section>
+                    <h1 style="color: white; font-size: 1.75rem;">{{ pelicula.title }}</h1>
+                    <section class="d-flex align-items-center justify-content-between">
+                    <p class="netflix-card-text m-0" style="color: rgb(0, 186, 0);">97% de coincidencia</p>
+                    <span class="m-2 netflix-card-text text-white">{{ pelicula.genres|join(', ') }}</span> <span
+                        class="border netflix-card-text p-1 text-white">HD</span>
+                    </section>
         </div>
+    </div>
+                
+            <script>
+                const btnAbrirInfo_pelis_{{ pelicula.id }} = document.querySelector("#btn-abrir-info-peliculas-{{ pelicula.id }}");
+                const btnCerrarInfo_pelis_{{ pelicula.id }} = document.querySelector("#btn-cerrar-info-peliculas-{{ pelicula.id }}");
+                const info_pelis_{{ pelicula.id }} = document.querySelector("#info-peliculas-{{ pelicula.id }}");
+        
+                btnAbrirInfo_pelis_{{ pelicula.id }}.addEventListener("click", () => {
+                    info_pelis_{{ pelicula.id }}.showModal();
+                })
+        
+                btnCerrarInfo_pelis_{{ pelicula.id }}.addEventListener("click", () => {
+                    info_pelis_{{ pelicula.id }}.close();
+                })
+            </script>';
     {% endfor %}
     </div>
 
@@ -43,6 +94,7 @@
                 {% endfor %}
             </div>
         </div>
+
     {% endfor %}
     </div>
 
