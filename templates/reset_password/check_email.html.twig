@@ -1,14 +1,33 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Password Reset Email Sent{% endblock %}
+{% block title %}Correo enviado{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/base.css') }}">
+{% endblock %}
 
 {% block body %}
-{% block header %}
-    {% endblock %}
 
-    <p>
-        If an account matching your email exists, then an email was just sent that contains a link that you can use to reset your password.
-        This link will expire in {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.
-    </p>
-    <p>If you don't receive an email please check your spam folder or <a href="{{ path('app_forgot_password_request') }}">try again</a>.</p>
+    {% block header %}
+    {% endblock %}
+    <div class="container text-center text-white w-50">
+        <div class="d-flex justify-content-center align-items-center">
+            <img src="{{ asset('images/logo/logo.png') }}" alt="logo" class="logo mb-4 w-80" />
+        </div>
+        <div style="
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 10px;
+        ">
+            <h2 class="text-white">Correo enviado</h2>
+
+            <p>
+                Si existe una cuenta que coincida con su correo electrónico, se acaba de enviar un correo electrónico que contiene un enlace que puede utilizar para restablecer su contraseña.
+                Este enlace caducará en {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.
+            </p>
+            <p>Si no recibe un correo electrónico, revise su carpeta de correo no deseado o <a style="text-decoration: underline;" href="{{ path('app_forgot_password_request') }}">inténtalo de nuevo</a>.</p>
+        </div>
+    </div>
 {% endblock %}

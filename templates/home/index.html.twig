@@ -5,14 +5,46 @@
 {% block stylesheets %}
     {{ parent() }}
     <link rel="stylesheet" href="{{ asset('css/base.css') }}">
-{% endblock %}
+    <link rel="stylesheet" href="{{ asset('css/home.css') }}">
 
-{% block header %}
-    {% include '_navbar.html.twig' %}
 {% endblock %}
 
 {% block body %}
+    <h2 class="text-white">Películas</h2>
+    <div class="container-fluid d-flex flex-wrap justify-content-center">
+    {% for pelicula in peliculas %}
+        <div class="card">
+            <img src="{{ pelicula.image }}" width="200px" alt="Imagen {{ pelicula.title }}">
+            <div class="container">
+                <h4><b>{{ pelicula.title }}</b></h4>
+                <p>{{ pelicula.description }}</p>
+                <p>{{ pelicula.release_date }}</p>
+                <p>Géneros: {{ pelicula.genres|join(', ') }}</p>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
 
+    <h2 class="text-white">Series</h2>
+    <div class="container-fluid d-flex flex-wrap justify-content-center">
+    {% for serie in series %}
+        <div class="card">
+            <img src="{{ serie.image }}" width="200px" alt="Imagen {{ serie.title }}">
+            <div class="container">
+                <h4><b>{{ serie.title }}</b></h4>
+                <p>{{ serie.description }}</p>
+                <p>{{ serie.release_date }}</p>
+                <p>Géneros: {{ serie.genres|join(', ') }}</p>
+                <p>Num temporadas: {{ serie.number_of_seasons }}</p>
+                <p>Num episodios: {{ serie.number_of_episodes }}</p>
+                <h5>Temporadas</h5>
+                {% for temporada in serie.seasons %}
+                    <p>Temporada {{ temporada.season_number }}: {{ temporada.episode_count }} episodios - Air Date: {{ temporada.air_date }}</p>
+                {% endfor %}
+            </div>
+        </div>
+    {% endfor %}
+    </div>
 
 {% endblock %}
 

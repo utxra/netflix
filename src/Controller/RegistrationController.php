@@ -62,6 +62,8 @@ class RegistrationController extends AbstractController
             // generate a verification token
             $user->setVerificationToken($this->tokenGenerator->generateToken());
 
+            $user->setIsVerified(false);
+
             // Add some logging
             error_log(print_r($user, true));
             error_log(print_r($user->getVerificationToken(), true));
@@ -74,9 +76,9 @@ class RegistrationController extends AbstractController
 
             $emailHtml = $this->renderView('registration/confirmation_email.html.twig', [
                 'user' => $user->getNombre(),
-                'token' => $user->getVerificationToken()
+                'token' => $user->getVerificationToken(),
+                'email' => $user->getEmail(),
             ]);
-            
 
             $resend = Resend::client('re_TPPKWAXB_54DKvHzkZi2PArJyAabbQF4C');
             

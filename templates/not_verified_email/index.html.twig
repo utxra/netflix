@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Confirma tu correo{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/login.css') }}">
+{% endblock %}
+
+{% block body %}
+
+    {% block header %}
+    {% endblock %}
+
+    <div class="d-flex flex-column justify-content-center align-items-center" style="width: 100vw; height: 100vh;">
+        <img src="{{ asset('images/logo/logo.png') }}" alt="logo" class="logo mb-4">
+        <section class="login-box">
+                
+            <div class="text-white">
+        
+                <h1 class="text-center text-white">Confirma tu correo</h1>
+                <p class="text-center">Hemos enviado un correo a <strong>{{ app.user.email }}</strong> con un enlace para confirmar tu dirección de correo electrónico.</p>
+                <p class="text-center">Si no recibiste el correo, por favor revisa tu carpeta de spam</p>
+
+            </div>
+                
+        </section>
+    </div>
+{% endblock %}

@@ -162,6 +162,7 @@ class ResetPasswordController extends AbstractController
         $emailHtml = $this->renderView('reset_password/email.html.twig', [
             'user' => $user->getNombre(),
             'resetToken' => $resetToken,
+            'email' => $user->getEmail(),
         ]);
         
         $resend = Resend::client('re_TPPKWAXB_54DKvHzkZi2PArJyAabbQF4C');
