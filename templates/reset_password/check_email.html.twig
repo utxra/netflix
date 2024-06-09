@@ -5,29 +5,45 @@
 {% block stylesheets %}
     {{ parent() }}
     <link rel="stylesheet" href="{{ asset('css/base.css') }}">
+    <style>
+        @media (max-width: 768px) {
+            .logo {
+                width: 200px;
+            }
+        }
+
+        .centrar {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+    </style>
 {% endblock %}
 
 {% block body %}
 
     {% block header %}
     {% endblock %}
-    <div class="container text-center text-white w-50">
-        <div class="d-flex justify-content-center align-items-center">
+    <div class="container text-center text-white">
+        <div class="centrar">
             <img src="{{ asset('images/logo/logo.png') }}" alt="logo" class="logo mb-4 w-80" />
-        </div>
-        <div style="
-        border-radius: 10px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        padding: 10px;
-        ">
-            <h2 class="text-white">Correo enviado</h2>
+            <div style="
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 10px;
+            ">
+                <h2 class="text-white">Correo enviado</h2>
 
-            <p>
-                Si existe una cuenta que coincida con su correo electrónico, se acaba de enviar un correo electrónico que contiene un enlace que puede utilizar para restablecer su contraseña.
-                Este enlace caducará en {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.
-            </p>
-            <p>Si no recibe un correo electrónico, revise su carpeta de correo no deseado o <a style="text-decoration: underline;" href="{{ path('app_forgot_password_request') }}">inténtalo de nuevo</a>.</p>
+                <p>
+                    Si existe una cuenta que coincida con su correo electrónico, se acaba de enviar un correo electrónico que contiene un enlace que puede utilizar para restablecer su contraseña.
+                    Este enlace caducará en {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.
+                </p>
+                <p>Si no recibe un correo electrónico, revise su carpeta de correo no deseado o <a style="text-decoration: underline;" href="{{ path('app_forgot_password_request') }}">inténtalo de nuevo</a>.</p>
+            </div>
         </div>
+        
     </div>
 {% endblock %}

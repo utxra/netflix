@@ -2,14 +2,63 @@
 
 {% block title %}Reset your password{% endblock %}
 
+{% block stylesheets %}
+{{ parent() }}
+<link rel="stylesheet" href="{{ asset('css/login.css') }}" />
+{% endblock %} 
+
 {% block body %}
 {% block header %}
     {% endblock %}
 
-    <h1>Reset your password</h1>
 
-    {{ form_start(resetForm) }}
-        {{ form_row(resetForm.plainPassword) }}
-        <button class="btn btn-primary">Reset password</button>
-    {{ form_end(resetForm) }}
+    <div
+        class="d-flex flex-column justify-content-center align-items-center"
+        style="width: 100vw; height: 100vh">
+        <img src="{{ asset('images/logo/logo.png') }}" alt="logo" class="logo mb-4" />
+        <section class="login-box">
+            <h2 class="text-white">Reestablece tu contraseña</h2>
+            {{ form_start(resetForm) }}
+
+            {% for flash_error in app.flashes('reset_password_error') %}
+            <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+            {% endfor %}
+            
+            <div class="mb-3 bg-white rounded px-2">
+                    
+                {{ form_label(resetForm.plainPassword.first, 'Contraseña', { 'label_attr': {'class': 'form_label small_text'}}) }}
+                {{ form_widget(resetForm.plainPassword.first, { 'label': false, 'attr': {'class': 'form-control border-0 p-0'}}) }}
+                <div class="small-text">La contraseña debe tener entre 8 y 24 carácteres. Debe contener al menos una letra mayúscula, una letra minúscula, un número y un carácter especial.</div>
+
+                {% if form_errors(resetForm.plainPassword.first) %}
+                <div class="alert alert-danger rounded px-2">{{ form_errors(resetForm.plainPassword.first) }}</div>
+                {% endif %}
+            </div>
+
+            <div class="mb-3 bg-white rounded px-2">
+                
+                {{ form_label(resetForm.plainPassword.second, 'Confirmar contraseña', { 'label_attr': {'class': 'form_label small_text'}}) }}
+                {{ form_widget(resetForm.plainPassword.second, { 'label': false, 'attr': {'class': 'form-control border-0 p-0'}}) }}
+                
+                {% if form_errors(resetForm.plainPassword.second) %}
+                <div class="alert alert-danger rounded px-2">{{ form_errors(resetForm.plainPassword.second) }}</div>
+                {% endif %}
+            </div>
+
+            <button
+                class="btn btn-danger btn-primary mt-3"
+                style="width: 100%"
+            >
+            Reset password
+            </button>
+
+            <div class="text-center mt-3">
+                <a href="{{ path('app_register') }}" class="text-white small-text"
+                    >¿No tienes cuenta? Regístrate</a
+                >
+            </div>
+            {{ form_end(resetForm) }}
+        </section>
+    </div>
+
 {% endblock %}

@@ -11,6 +11,7 @@ use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\NotCompromisedPassword;
 use Symfony\Component\Validator\Constraints\PasswordStrength;
+use Symfony\Component\Validator\Constraints\Regex;
 
 class ChangePasswordFormType extends AbstractType
 {
@@ -19,34 +20,33 @@ class ChangePasswordFormType extends AbstractType
         $builder
             ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
-                'options' => [
-                    'attr' => [
-                        'autocomplete' => 'new-password',
-                    ],
-                ],
+                // instead of being set onto the object directly,
+                // this is read and encoded in the controller
+                'required' => false,
+                'mapped' => false,
+                'invalid_message' => 'Las contraseñas no coinciden.',
                 'first_options' => [
+                    'help' => 'La contraseña debe tener entre 8 y 24 carácteres.
+                    Debe contener al menos una letra mayúscula, una letra minúscula, un número y un carácter especial.',
+                    'attr' => ['autocomplete' => 'new-password', 'novalidate' => 'novalidate'],
                     'constraints' => [
                         new NotBlank([
-                            'message' => 'Please enter a password',
+                            'message' => 'Introduzca una contraseña',
                         ]),
                         new Length([
-                            'min' => 12,
-                            'minMessage' => 'Your password should be at least {{ limit }} characters',
+                            'min' => 8,
+                            'minMessage' => 'Tu contraseña como mínimo tendrá {{ limit }} characters',
                             // max length allowed by Symfony for security reasons
-                            'max' => 4096,
+                            'max' => 24,
                         ]),
-                        new PasswordStrength(),
-                        new NotCompromisedPassword(),
+                        new Regex([
+                            'pattern' => '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&.])[A-Za-z\d@$!%*?&.]{8,}$/',
+                            'message' => 'La contraseña debe tener al menos una letra mayúscula, una letra minúscula, un número y un carácter especial.',])
                     ],
-                    'label' => 'New password',
                 ],
                 'second_options' => [
-                    'label' => 'Repeat Password',
-                ],
-                'invalid_message' => 'The password fields must match.',
-                // Instead of being set onto the object directly,
-                // this is read and encoded in the controller
-                'mapped' => false,
+                    'attr' => ['autocomplete' => 'new-password']
+                ]
             ])
         ;
     }
