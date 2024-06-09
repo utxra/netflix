@@ -16,16 +16,48 @@
 
 <div class="plyr__video-embed" id="player">
   <iframe
-    src="https://www.youtube.com/embed/{{ video }}?autoplay=1"
+    src="https://www.youtube.com/embed/{{ video }}?origin={{ origin }}&autoplay=1"
     allowfullscreen
     allowtransparency
     allow="autoplay"
+    autoplay
   ></iframe>
 </div>
 
 <script src="https://cdn.plyr.io/3.7.8/plyr.polyfilled.js"></script>
-<script>
-  const player = new Plyr('#player');
-</script>
 
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const player = new Plyr('#player', { 
+            youtube: { 
+                noCookie: true 
+            } 
+        });
+
+        // Función para obtener el valor de una cookie por nombre
+        function getCookie(name) {
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; ${name}=`);
+            if (parts.length === 2) return parts.pop().split(';').shift();
+        }
+
+        // Verificar si hay un tiempo de restauración guardado en la cookie
+        const tiempoRestauracion = getCookie('videoTime_{{ video }}');
+        if (tiempoRestauracion) {
+            player.once('ready', () => {
+                player.currentTime = parseFloat(tiempoRestauracion);
+            });
+        }
+
+        // Guardar el progreso en la cookie en cada actualización de tiempo
+        player.on('timeupdate', () => {
+            document.cookie = "videoTime_{{ video }}=" + player.currentTime + "; path=/";
+        });
+
+        // Guardar el tiempo de reproducción antes de que la página se recargue o se cierre
+        window.addEventListener("beforeunload", () => {
+            document.cookie = "videoTime_{{ video }}=" + player.currentTime + "; path=/";
+        });
+    });
+</script>
 {% endblock %}

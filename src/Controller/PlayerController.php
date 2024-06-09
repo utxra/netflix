@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
@@ -29,7 +30,7 @@ class PlayerController extends AbstractController
 
     #[IsGranted('ROLE_USER')]
     #[Route('/player/m/{id}', name: 'app_player_movies')]
-    public function movies(int $id): Response
+    public function movies(int $id, Request $request ): Response
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
 
@@ -46,11 +47,42 @@ class PlayerController extends AbstractController
 
         $video = $data['results'][0]['key'];
 
+        $origin = $request->getSchemeAndHttpHost();
+
+        return $this->render('player/index.html.twig', [
+            'id' => $id,
+            'video' => $video,
+            'origin' => $origin,
+        ]);
+    }
+
+    #[IsGranted('ROLE_USER')]
+    #[Route('/player/s/{id}', name: 'app_player_series')]
+    public function series(int $id, Request $request): Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_USER');
+
+        $client = new \GuzzleHttp\Client();
+
+        $response = $client->request('GET', "https://api.themoviedb.org/3/tv/{$id}/videos?language=es-ES", [
+            'headers' => [
+                'Authorization' => 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjYmZkMTg3NjMwZjg4ODYxMGMxNWYwODMzYThkN2I5OSIsInN1YiI6IjY2NjE5ODNiYjc5YmVjMzA5ZDAwYmYwNyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.b51Uf9foDUGRXv2HJNkwimH6BDiBkvVKy1ez8i8tJv4',
+                'accept' => 'application/json',
+            ],
+        ]);
+
+        $data = json_decode($response->getBody(), true);
+
+        $video = $data['results'][0]['key'];
+
+        $origin = $request->getSchemeAndHttpHost();
+
         dump($data);
 
         return $this->render('player/index.html.twig', [
             'id' => $id,
             'video' => $video,
+            'origin' => $origin,
         ]);
     }
 }

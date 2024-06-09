@@ -1,3 +1,7 @@
 .plyr {
     height: 100vh;
 }
+
+:root {
+    --plyr-color-main: red;
+}

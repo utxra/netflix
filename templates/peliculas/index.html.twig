@@ -1,0 +1,464 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Home
+{% endblock %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	<link rel="stylesheet" href="{{ asset('css/base.css') }}">
+	<link rel="stylesheet" href="{{ asset('css/home.css') }}">
+
+{% endblock %}
+
+{% block body %}
+    <div style="banner-parent">
+        <div class="banner" style="background-image: linear-gradient(rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.35) 10%, rgba(0, 0, 0, 0.35) 80%, rgb(18, 18, 18) 100%), url('{{ banner_movie.image }}')">
+            <div class="banner-content">
+                <div>
+                    <img src="{{ banner_movie.logo }}" alt="Logo {{ banner_movie.title }}" class="banner-image" style="width: 100%;">
+                </div>
+				<div class="mt-4">
+					<a href="{{ path('app_player_movies', {'id': banner_movie.id}) }}">
+						<button class="btn btn-light m-2 d-flex justify-content-center align-item-center">
+							<i class="fa-solid fa-play" style="color: black; padding: 0;"></i> Reproducir
+						</button>
+					</a>
+				</div>
+            </div>
+        </div>
+    </div>
+
+	<div class="movie-container">
+    <p class="titulo-seccion">Películas mejor valoradas ></p>
+
+	<div class="container-fluid d-flex flex-wrap justify-content-center px-xxl-5 px-xl-4 px-l-4">
+	
+    	{% for pelicula in top_rated_peliculas %}
+	
+    		<div class="card" id="card-peli-{{ pelicula.id }}">
+	
+    			<img src="{{ pelicula.image }}" class="card-img-top" alt="Imagen {{ pelicula.title }}">
+	
+    			<div class="card-body">
+	
+    				<section class="d-flex justify-content-between">
+                        <div>
+                            <p class="text-white" style="font-size: small;">
+                            Película
+                            </p>
+                        </div>
+                        <div>
+
+						</div>
+						<div>
+							<a href="" download>
+								<i class="bi bi-arrow-down-circle card-icon"></i>
+							</a>
+						</div>
+					</section>
+	
+    				<h1 style="color: white; font-size: 1.75rem;">{{ pelicula.title }}</h1>
+	
+    				<section class="d-flex align-items-center justify-content-between">
+
+                        <div class="puntuacion">
+    					    <div class="porcentaje">
+                                <p class="netflix-card-text m-0" style="color: rgb(0, 186, 0);">
+                                {{ pelicula.vote_average|number_format|round }}%</p>
+                            
+                            </div>
+                        </div>
+						
+                        <span class="m-2 netflix-card-text text-white">{{ pelicula.genres|join(' - ') }}</span>
+						<span class="border netflix-card-text p-1 text-white">HD</span>
+	
+    				</section>
+	
+    			</div>
+	
+    		</div>
+
+			{# <--! POP UP PELÍCULA --> #}
+            <dialog id="info-peliculas-{{ pelicula.id }}" class="info">
+		
+        		<div>
+		
+        			<section class="netflix-home-video">
+		
+        				<button class="btn-close btn-close-white btn-cerrar-info" id="btn-cerrar-info-peliculas-{{ pelicula.id }}"></button>
+        				<div class="content">
+		
+        					<section class="left">
+
+							<div class="banner" style="background-image: linear-gradient(rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.35) 10%, rgba(0, 0, 0, 0.35) 80%, rgb(18, 18, 18) 100%), url('{{ pelicula.image }}');">
+								
+								<div class="banner-content">
+									
+									{% if pelicula.logo %}
+										<img src="{{ pelicula.logo }}" alt="Logo {{ pelicula.title }}" class="info-logo">
+									{% else %}
+										<h4>{{ pelicula.title }}</h4>
+									{% endif %}
+									<div class="mt-2">
+									<a href="{{ path('app_player_movies', {'id': pelicula.id}) }}">
+										<button class="btn btn-light m-2 d-flex justify-content-center align-item-center">
+											<i class="fa-solid fa-play" style="color: black; padding: 0;"></i> Reproducir
+										</button>
+									</a>
+								</div>
+								
+								</div>
+
+							</div>
+		
+        					</section>
+		
+        				</div>
+		
+        			</section>
+		
+        		</div>
+		
+        		<div class="info-contenido m-5 row">
+		
+        			<div class="col d-flex align-items-center">
+		
+        				<h3 class="text-white">Sinopsis</h3>
+		
+        				<div class="duracion">Fecha {{ pelicula.release_date }}</div>
+					
+                    </div>
+					
+                    <div>
+					
+                    	<p style="text-align: justify;">{{ pelicula.description }}</p>
+						<p>
+							<b>Reparto:
+							</b>
+							{% for member in pelicula.cast %}
+								{{ member.name }}
+								as
+								{{ member.character }}
+							{% endfor %}
+							, etc.
+                        </p>
+				
+                	</div>
+
+				</div>
+
+			</dialog>
+
+			<script>
+
+				const card_peli_{{ pelicula.id }} = document.querySelector("#card-peli-{{ pelicula.id }}");
+                const btnCerrarInfo_pelis_{{ pelicula.id }} = document.querySelector("#btn-cerrar-info-peliculas-{{ pelicula.id }}");
+                const info_pelis_{{ pelicula.id }} = document.querySelector("#info-peliculas-{{ pelicula.id }}");
+
+                card_peli_{{ pelicula.id }}.addEventListener("click", () => {
+                info_pelis_{{ pelicula.id }}.showModal();
+                })
+
+                btnCerrarInfo_pelis_{{ pelicula.id }}.addEventListener("click", () => {
+                info_pelis_{{ pelicula.id }}.close();
+                })
+
+			</script>
+		{% endfor %}
+	</div>
+    </div>
+
+    <div style="
+        height: 75px;
+    ">
+    </div>
+
+    <div class="movie-container">
+    <p class="titulo-seccion">Ahora mismo en el cine ></p>
+
+	<div class="container-fluid d-flex flex-wrap justify-content-center px-xxl-5 px-xl-4 px-l-4">
+	
+    	{% for pelicula in now_playing_peliculas %}
+	
+    		<div class="card" id="card-peli-{{ pelicula.id }}">
+	
+    			<img src="{{ pelicula.image }}" class="card-img-top" alt="Imagen {{ pelicula.title }}">
+	
+    			<div class="card-body">
+	
+    				<section class="d-flex justify-content-between">
+                        <div>
+                            <p class="text-white" style="font-size: small;">
+                            Película
+                            </p>
+                        </div>
+                        <div>
+
+						</div>
+						<div>
+							<a href="" download>
+								<i class="bi bi-arrow-down-circle card-icon"></i>
+							</a>
+						</div>
+					</section>
+	
+    				<h1 style="color: white; font-size: 1.75rem;">{{ pelicula.title }}</h1>
+	
+    				<section class="d-flex align-items-center justify-content-between">
+
+                        <div class="puntuacion">
+    					    <div class="porcentaje">
+                                <p class="netflix-card-text m-0" style="color: rgb(0, 186, 0);">
+                                {{ pelicula.vote_average|number_format|round }}%</p>
+                            
+                            </div>
+                        </div>
+						
+                        <span class="m-2 netflix-card-text text-white">{{ pelicula.genres|join(' - ') }}</span>
+						<span class="border netflix-card-text p-1 text-white">HD</span>
+	
+    				</section>
+	
+    			</div>
+	
+    		</div>
+
+			{# <--! POP UP PELÍCULA --> #}
+            <dialog id="info-peliculas-{{ pelicula.id }}" class="info">
+		
+        		<div>
+		
+        			<section class="netflix-home-video">
+		
+        				<button class="btn-close btn-close-white btn-cerrar-info" id="btn-cerrar-info-peliculas-{{ pelicula.id }}"></button>
+        				<div class="content">
+		
+        					<section class="left">
+
+							<div class="banner" style="background-image: linear-gradient(rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.35) 10%, rgba(0, 0, 0, 0.35) 80%, rgb(18, 18, 18) 100%), url('{{ pelicula.image }}');">
+								
+								<div class="banner-content">
+									
+									{% if pelicula.logo %}
+										<img src="{{ pelicula.logo }}" alt="Logo {{ pelicula.title }}" class="info-logo">
+									{% else %}
+										<h4>{{ pelicula.title }}</h4>
+									{% endif %}
+									<div class="mt-2">
+									<a href="{{ path('app_player_movies', {'id': pelicula.id}) }}">
+										<button class="btn btn-light m-2 d-flex justify-content-center align-item-center">
+											<i class="fa-solid fa-play" style="color: black; padding: 0;"></i> Reproducir
+										</button>
+									</a>
+								</div>
+								
+								</div>
+
+							</div>
+		
+        					</section>
+		
+        				</div>
+		
+        			</section>
+		
+        		</div>
+		
+        		<div class="info-contenido m-5 row">
+		
+        			<div class="col d-flex align-items-center">
+		
+        				<h3 class="text-white">Sinopsis</h3>
+		
+        				<div class="duracion">Fecha {{ pelicula.release_date }}</div>
+					
+                    </div>
+					
+                    <div>
+					
+                    	<p style="text-align: justify;">{{ pelicula.description }}</p>
+						<p>
+							<b>Reparto:
+							</b>
+							{% for member in pelicula.cast %}
+								{{ member.name }}
+								as
+								{{ member.character }}
+							{% endfor %}
+							, etc.
+                        </p>
+				
+                	</div>
+
+				</div>
+
+			</dialog>
+
+			<script>
+
+				const card_peli_{{ pelicula.id }} = document.querySelector("#card-peli-{{ pelicula.id }}");
+                const btnCerrarInfo_pelis_{{ pelicula.id }} = document.querySelector("#btn-cerrar-info-peliculas-{{ pelicula.id }}");
+                const info_pelis_{{ pelicula.id }} = document.querySelector("#info-peliculas-{{ pelicula.id }}");
+
+                card_peli_{{ pelicula.id }}.addEventListener("click", () => {
+                info_pelis_{{ pelicula.id }}.showModal();
+                })
+
+                btnCerrarInfo_pelis_{{ pelicula.id }}.addEventListener("click", () => {
+                info_pelis_{{ pelicula.id }}.close();
+                })
+
+			</script>
+		{% endfor %}
+	</div>
+    </div>
+
+
+    <div style="
+        height: 75px;
+    ">
+    </div>
+
+    <div class="movie-container">
+    <p class="titulo-seccion">Populares ></p>
+
+	<div class="container-fluid d-flex flex-wrap justify-content-center px-xxl-5 px-xl-4 px-l-4">
+	
+    	{% for pelicula in popular_peliculas %}
+	
+    		<div class="card" id="card-peli-{{ pelicula.id }}">
+	
+    			<img src="{{ pelicula.image }}" class="card-img-top" alt="Imagen {{ pelicula.title }}">
+	
+    			<div class="card-body">
+	
+    				<section class="d-flex justify-content-between">
+                        <div>
+                            <p class="text-white" style="font-size: small;">
+                            Película
+                            </p>
+                        </div>
+                        <div>
+
+						</div>
+						<div>
+							<a href="" download>
+								<i class="bi bi-arrow-down-circle card-icon"></i>
+							</a>
+						</div>
+					</section>
+	
+    				<h1 style="color: white; font-size: 1.75rem;">{{ pelicula.title }}</h1>
+	
+    				<section class="d-flex align-items-center justify-content-between">
+
+                        <div class="puntuacion">
+    					    <div class="porcentaje">
+                                <p class="netflix-card-text m-0" style="color: rgb(0, 186, 0);">
+                                {{ pelicula.vote_average|number_format|round }}%</p>
+                            
+                            </div>
+                        </div>
+						
+                        <span class="m-2 netflix-card-text text-white">{{ pelicula.genres|join(' - ') }}</span>
+						<span class="border netflix-card-text p-1 text-white">HD</span>
+	
+    				</section>
+	
+    			</div>
+	
+    		</div>
+
+			{# <--! POP UP PELÍCULA --> #}
+            <dialog id="info-peliculas-{{ pelicula.id }}" class="info">
+		
+        		<div>
+		
+        			<section class="netflix-home-video">
+		
+        				<button class="btn-close btn-close-white btn-cerrar-info" id="btn-cerrar-info-peliculas-{{ pelicula.id }}"></button>
+        				<div class="content">
+		
+        					<section class="left">
+
+							<div class="banner" style="background-image: linear-gradient(rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.35) 10%, rgba(0, 0, 0, 0.35) 80%, rgb(18, 18, 18) 100%), url('{{ pelicula.image }}');">
+								
+								<div class="banner-content">
+									
+									{% if pelicula.logo %}
+										<img src="{{ pelicula.logo }}" alt="Logo {{ pelicula.title }}" class="info-logo">
+									{% else %}
+										<h4>{{ pelicula.title }}</h4>
+									{% endif %}
+									<div class="mt-2">
+									<a href="{{ path('app_player_movies', {'id': pelicula.id}) }}">
+										<button class="btn btn-light m-2 d-flex justify-content-center align-item-center">
+											<i class="fa-solid fa-play" style="color: black; padding: 0;"></i> Reproducir
+										</button>
+									</a>
+								</div>
+								
+								</div>
+
+							</div>
+		
+        					</section>
+		
+        				</div>
+		
+        			</section>
+		
+        		</div>
+		
+        		<div class="info-contenido m-5 row">
+		
+        			<div class="col d-flex align-items-center">
+		
+        				<h3 class="text-white">Sinopsis</h3>
+		
+        				<div class="duracion">Fecha {{ pelicula.release_date }}</div>
+					
+                    </div>
+					
+                    <div>
+					
+                    	<p style="text-align: justify;">{{ pelicula.description }}</p>
+						<p>
+							<b>Reparto:
+							</b>
+							{% for member in pelicula.cast %}
+								{{ member.name }}
+								as
+								{{ member.character }}
+							{% endfor %}
+							, etc.
+                        </p>
+				
+                	</div>
+
+				</div>
+
+			</dialog>
+
+			<script>
+
+				const card_peli_{{ pelicula.id }} = document.querySelector("#card-peli-{{ pelicula.id }}");
+                const btnCerrarInfo_pelis_{{ pelicula.id }} = document.querySelector("#btn-cerrar-info-peliculas-{{ pelicula.id }}");
+                const info_pelis_{{ pelicula.id }} = document.querySelector("#info-peliculas-{{ pelicula.id }}");
+
+                card_peli_{{ pelicula.id }}.addEventListener("click", () => {
+                info_pelis_{{ pelicula.id }}.showModal();
+                })
+
+                btnCerrarInfo_pelis_{{ pelicula.id }}.addEventListener("click", () => {
+                info_pelis_{{ pelicula.id }}.close();
+                })
+
+			</script>
+		{% endfor %}
+	</div>
+    </div>
+
+	{% include "_footer.html.twig" %}
+
+{% endblock %}

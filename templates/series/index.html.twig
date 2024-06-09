@@ -1,0 +1,522 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Home
+{% endblock %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	<link rel="stylesheet" href="{{ asset('css/base.css') }}">
+	<link rel="stylesheet" href="{{ asset('css/home.css') }}">
+
+{% endblock %}
+
+{% block body %}
+    <div style="banner-parent">
+        <div class="banner" style="background-image: linear-gradient(rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.35) 10%, rgba(0, 0, 0, 0.35) 80%, rgb(18, 18, 18) 100%), url('{{ banner_serie.image }}')">
+            <div class="banner-content">
+                <div>
+                    <img src="{{ banner_serie.logo }}" alt="Logo {{ banner_serie.title }}" class="banner-image" style="width: 100%;">
+                </div>
+				<div class="mt-4">
+					<a href="{{ path('app_player_movies', {'id': banner_serie.id}) }}">
+						<button class="btn btn-light m-2 d-flex justify-content-center align-item-center">
+							<i class="fa-solid fa-play" style="color: black; padding: 0;"></i> Reproducir
+						</button>
+					</a>
+				</div>
+            </div>
+        </div>
+    </div>
+
+	<div class="movie-container">
+    <p class="titulo-seccion">Series mejor valoradas ></p>
+
+	<div class="container-fluid d-flex flex-wrap justify-content-center px-xxl-5 px-xl-4 px-l-4">
+
+		{% for serie in top_rated_series %}
+
+			<div class="card" id="card-serie-{{ serie.id }}">
+
+				<img src="{{ serie.image }}" class="card-img-top" alt="Imagen{{ serie.title }}">
+
+				<div class="card-body">
+
+					<section class="d-flex justify-content-between">
+						<div>
+
+						</div>
+
+						<div>
+
+							<a href="" download>
+								<i class="bi bi-arrow-down-circle card-icon"></i>
+							</a>
+
+						</div>
+
+					</section>
+
+					<h2 style="color: white; font-size: 1.75rem;">{{ serie.title }}</h2>
+
+                    <p style="font-size: 0.75rem;color:#fff;margin:0;">Series</p>
+
+					<section class="d-flex align-items-center justify-content-between">
+
+						 <div class="puntuacion">
+    					    
+                            <div class="porcentaje">
+                            
+                                <p class="netflix-card-text m-0" style="color: rgb(0, 186, 0);">
+                                {{ serie.vote_average|number_format|round }}%</p>
+                            
+                            </div>
+                        
+                        </div>
+						
+                        <span class="m-2 netflix-card-text text-white">{{ serie.genres|join(' - ') }}</span>
+
+						<span class="border netflix-card-text p-1 text-white">HD</span>
+
+					</section>
+
+				</div>
+
+			</div>
+
+			{# <--! POP UP SERIE --> #}
+			<dialog id="info-series-{{ serie.id }}" class="info">
+
+				<div>
+
+					<section class="netflix-home-video">
+
+						<button class="btn-close btn-close-white btn-cerrar-info" id="btn-cerrar-info-series-{{ serie.id }}"></button>
+
+						<div class="banner" style="background-image: linear-gradient(rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.35) 10%, rgba(0, 0, 0, 0.35) 80%, rgb(18, 18, 18) 100%), url('{{ serie.image }}');">
+							<div class="banner-content">
+								{% if serie.logo %}
+								<img src="{{ serie.logo }}" alt="Logo {{ serie.title }}" class="info-logo">
+								{% else %}
+								<h4>{{ serie.title }}</h4>
+								{% endif %}
+								<div class="mt-2">
+									<a href="{{ path('app_player_series', {'id': serie.id}) }}">
+										<button class="btn btn-light m-2 d-flex justify-content-center align-item-center">
+											<i class="fa-solid fa-play" style="color: black; padding: 0;"></i> Reproducir
+										</button>
+									</a>
+							</div>
+						</div>
+
+						<div class="content">
+
+							<section class="left">
+
+							</section>
+
+						</div>
+
+					</section>
+
+				</div>
+
+				<div class="info-contenido m-5 row">
+
+					<div class="col d-flex align-items-center">
+
+						<h3 class="text-white">Sinopsis</h3>
+
+						<div class="duracion">Fecha {{ serie.release_date }}</div>
+
+					</div>
+
+					<div>
+
+						<p style="text-align: justify;">{{ serie.description }}</p>
+						<p>
+							<b>Reparto:
+							</b>
+							{% for member in serie.cast %}
+								{{ member.name }}
+								as
+								{{ member.character }}
+							{% endfor %}
+							, etc.
+                        </p>
+
+					</div>
+
+                    <div>
+                    
+                        <p>
+                            <b>Temporadas:
+                            </b>
+                            {{ serie.seasons|length }}
+                        </p>
+						<p> 
+							<b>Episodios:
+							</b>
+							{{ serie.number_of_episodes }}
+						</p>
+
+                    </div>
+
+                </div>
+
+			</dialog>
+
+			<script>
+
+				const card_serie_{{ serie.id }} = document.querySelector("#card-serie-{{ serie.id }}");
+                const btnCerrarInfo_series_{{ serie.id }} = document.querySelector("#btn-cerrar-info-series-{{ serie.id }}");
+                const info_series_{{ serie.id }} = document.querySelector("#info-series-{{ serie.id }}");
+
+                card_serie_{{ serie.id }}.addEventListener("click", () => {
+                info_series_{{ serie.id }}.showModal();
+                })
+
+                btnCerrarInfo_series_{{ serie.id }}.addEventListener("click", () => {
+                info_series_{{ serie.id }}.close();
+                console.log("cerrar");
+                })
+
+            </script>
+		{% endfor %}
+
+	</div>
+    </div>
+
+    <div style="
+        height: 75px;
+    ">
+    </div>
+
+    <div class="movie-container">
+    <p class="titulo-seccion">Series en emisión ></p>
+
+	<div class="container-fluid d-flex flex-wrap justify-content-center px-xxl-5 px-xl-4 px-l-4">
+
+		{% for serie in on_the_air_series %}
+
+			<div class="card" id="card-serie-{{ serie.id }}">
+
+				<img src="{{ serie.image }}" class="card-img-top" alt="Imagen{{ serie.title }}">
+
+				<div class="card-body">
+
+					<section class="d-flex justify-content-between">
+						<div>
+
+						</div>
+
+						<div>
+
+							<a href="" download>
+								<i class="bi bi-arrow-down-circle card-icon"></i>
+							</a>
+
+						</div>
+
+					</section>
+
+					<h2 style="color: white; font-size: 1.75rem;">{{ serie.title }}</h2>
+
+                    <p style="font-size: 0.75rem;color:#fff;margin:0;">Series</p>
+
+					<section class="d-flex align-items-center justify-content-between">
+
+						 <div class="puntuacion">
+    					    
+                            <div class="porcentaje">
+                            
+                                <p class="netflix-card-text m-0" style="color: rgb(0, 186, 0);">
+                                {{ serie.vote_average|number_format|round }}%</p>
+                            
+                            </div>
+                        
+                        </div>
+						
+                        <span class="m-2 netflix-card-text text-white">{{ serie.genres|join(' - ') }}</span>
+
+						<span class="border netflix-card-text p-1 text-white">HD</span>
+
+					</section>
+
+				</div>
+
+			</div>
+
+			{# <--! POP UP SERIE --> #}
+			<dialog id="info-series-{{ serie.id }}" class="info">
+
+				<div>
+
+					<section class="netflix-home-video">
+
+						<button class="btn-close btn-close-white btn-cerrar-info" id="btn-cerrar-info-series-{{ serie.id }}"></button>
+
+						<div class="banner" style="background-image: linear-gradient(rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.35) 10%, rgba(0, 0, 0, 0.35) 80%, rgb(18, 18, 18) 100%), url('{{ serie.image }}');">
+							<div class="banner-content">
+								{% if serie.logo %}
+								<img src="{{ serie.logo }}" alt="Logo {{ serie.title }}" class="info-logo">
+								{% else %}
+								<h4>{{ serie.title }}</h4>
+								{% endif %}
+								<div class="mt-2">
+									<a href="{{ path('app_player_series', {'id': serie.id}) }}">
+										<button class="btn btn-light m-2 d-flex justify-content-center align-item-center">
+											<i class="fa-solid fa-play" style="color: black; padding: 0;"></i> Reproducir
+										</button>
+									</a>
+							</div>
+						</div>
+
+						<div class="content">
+
+							<section class="left">
+
+							</section>
+
+						</div>
+
+					</section>
+
+				</div>
+
+				<div class="info-contenido m-5 row">
+
+					<div class="col d-flex align-items-center">
+
+						<h3 class="text-white">Sinopsis</h3>
+
+						<div class="duracion">Fecha {{ serie.release_date }}</div>
+
+					</div>
+
+					<div>
+
+						<p style="text-align: justify;">{{ serie.description }}</p>
+						<p>
+							<b>Reparto:
+							</b>
+							{% for member in serie.cast %}
+								{{ member.name }}
+								as
+								{{ member.character }}
+							{% endfor %}
+							, etc.
+                        </p>
+
+					</div>
+
+                    <div>
+                    
+                        <p>
+                            <b>Temporadas:
+                            </b>
+                            {{ serie.seasons|length }}
+                        </p>
+						<p> 
+							<b>Episodios:
+							</b>
+							{{ serie.number_of_episodes }}
+						</p>
+
+                    </div>
+
+                </div>
+
+			</dialog>
+
+			<script>
+
+				const card_serie_{{ serie.id }} = document.querySelector("#card-serie-{{ serie.id }}");
+                const btnCerrarInfo_series_{{ serie.id }} = document.querySelector("#btn-cerrar-info-series-{{ serie.id }}");
+                const info_series_{{ serie.id }} = document.querySelector("#info-series-{{ serie.id }}");
+
+                card_serie_{{ serie.id }}.addEventListener("click", () => {
+                info_series_{{ serie.id }}.showModal();
+                })
+
+                btnCerrarInfo_series_{{ serie.id }}.addEventListener("click", () => {
+                info_series_{{ serie.id }}.close();
+                console.log("cerrar");
+                })
+
+            </script>
+		{% endfor %}
+
+	</div>
+    </div>
+
+    <div style="
+        height: 75px;
+    ">
+    </div>
+
+    <div class="movie-container">
+    <p class="titulo-seccion">Series más populares ></p>
+
+	<div class="container-fluid d-flex flex-wrap justify-content-center px-xxl-5 px-xl-4 px-l-4">
+
+		{% for serie in popular_series %}
+
+			<div class="card" id="card-serie-{{ serie.id }}">
+
+				<img src="{{ serie.image }}" class="card-img-top" alt="Imagen{{ serie.title }}">
+
+				<div class="card-body">
+
+					<section class="d-flex justify-content-between">
+						<div>
+
+						</div>
+
+						<div>
+
+							<a href="" download>
+								<i class="bi bi-arrow-down-circle card-icon"></i>
+							</a>
+
+						</div>
+
+					</section>
+
+					<h2 style="color: white; font-size: 1.75rem;">{{ serie.title }}</h2>
+
+                    <p style="font-size: 0.75rem;color:#fff;margin:0;">Series</p>
+
+					<section class="d-flex align-items-center justify-content-between">
+
+						 <div class="puntuacion">
+    					    
+                            <div class="porcentaje">
+                            
+                                <p class="netflix-card-text m-0" style="color: rgb(0, 186, 0);">
+                                {{ serie.vote_average|number_format|round }}%</p>
+                            
+                            </div>
+                        
+                        </div>
+						
+                        <span class="m-2 netflix-card-text text-white">{{ serie.genres|join(' - ') }}</span>
+
+						<span class="border netflix-card-text p-1 text-white">HD</span>
+
+					</section>
+
+				</div>
+
+			</div>
+
+			{# <--! POP UP SERIE --> #}
+			<dialog id="info-series-{{ serie.id }}" class="info">
+
+				<div>
+
+					<section class="netflix-home-video">
+
+						<button class="btn-close btn-close-white btn-cerrar-info" id="btn-cerrar-info-series-{{ serie.id }}"></button>
+
+						<div class="banner" style="background-image: linear-gradient(rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.35) 10%, rgba(0, 0, 0, 0.35) 80%, rgb(18, 18, 18) 100%), url('{{ serie.image }}');">
+							<div class="banner-content">
+								{% if serie.logo %}
+								<img src="{{ serie.logo }}" alt="Logo {{ serie.title }}" class="info-logo">
+								{% else %}
+								<h4>{{ serie.title }}</h4>
+								{% endif %}
+								<div class="mt-2">
+									<a href="{{ path('app_player_series', {'id': serie.id}) }}">
+										<button class="btn btn-light m-2 d-flex justify-content-center align-item-center">
+											<i class="fa-solid fa-play" style="color: black; padding: 0;"></i> Reproducir
+										</button>
+									</a>
+							</div>
+						</div>
+
+						<div class="content">
+
+							<section class="left">
+
+							</section>
+
+						</div>
+
+					</section>
+
+				</div>
+
+				<div class="info-contenido m-5 row">
+
+					<div class="col d-flex align-items-center">
+
+						<h3 class="text-white">Sinopsis</h3>
+
+						<div class="duracion">Fecha {{ serie.release_date }}</div>
+
+					</div>
+
+					<div>
+
+						<p style="text-align: justify;">{{ serie.description }}</p>
+						<p>
+							<b>Reparto:
+							</b>
+							{% for member in serie.cast %}
+								{{ member.name }}
+								as
+								{{ member.character }}
+							{% endfor %}
+							, etc.
+                        </p>
+
+					</div>
+
+                    <div>
+                    
+                        <p>
+                            <b>Temporadas:
+                            </b>
+                            {{ serie.seasons|length }}
+                        </p>
+						<p> 
+							<b>Episodios:
+							</b>
+							{{ serie.number_of_episodes }}
+						</p>
+
+                    </div>
+
+                </div>
+
+			</dialog>
+
+			<script>
+
+				const card_serie_{{ serie.id }} = document.querySelector("#card-serie-{{ serie.id }}");
+                const btnCerrarInfo_series_{{ serie.id }} = document.querySelector("#btn-cerrar-info-series-{{ serie.id }}");
+                const info_series_{{ serie.id }} = document.querySelector("#info-series-{{ serie.id }}");
+
+                card_serie_{{ serie.id }}.addEventListener("click", () => {
+                info_series_{{ serie.id }}.showModal();
+                })
+
+                btnCerrarInfo_series_{{ serie.id }}.addEventListener("click", () => {
+                info_series_{{ serie.id }}.close();
+                console.log("cerrar");
+                })
+
+            </script>
+		{% endfor %}
+
+	</div>
+
+	</div>
+
+	</div>
+    </div>
+
+
+	{% include "_footer.html.twig" %}
+
+{% endblock %}

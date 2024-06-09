@@ -18,7 +18,7 @@
 
     <div class="d-flex flex-column justify-content-center align-items-center" style="width: 100vw; height: 100vh;">
         <img src="{{ asset('images/logo/logo.png') }}" alt="logo" class="logo mb-4">
-        <section class="login-box" style="max-width: 550px;">
+        <section class="login-box">
         <h2 class="text-white">Regístrate</h2>
 
             {{ form_start(registrationForm) }}
@@ -93,7 +93,7 @@
                     
                     {{ form_label(registrationForm.avatar, 'Selecciona un avatar', { 'label_attr': {'class': 'text-white mb-3 h5'}}) }}
                     <br>
-                    <div class="d-flex justify-content-center align-items-center avatares">
+                    <div class="avatares">
                     {% for avatar in registrationForm.avatar %}
                         <label>
                             {{ form_widget(avatar, { 'label': false }) }}
