@@ -22,7 +22,7 @@ endif %}
 		</a>
 
 		<div class="collapse navbar-collapse" id="navbarNav">
-			<ul class="navbar-nav mr-auto">
+			<ul class="navbar-nav mr-auto text-white">
 				<li class="nav-item">
 					<a class="nav-link" href="{{ path('app_home') }}">Home</a>
 				</li>
@@ -104,7 +104,7 @@ endif %}
 	</div>
 
 	<div class="dropdown user-menu-wrapper ms-auto" id="user_menu_mobile">
-		<a
+		<button
 			class="user-details"
 			type="button"
 			data-bs-toggle="dropdown"
@@ -112,7 +112,7 @@ endif %}
 			aria-expanded="false"
 		>
 			<img class="user-avatar" src="{{ avatar }}" />
-		</a>
+		</button>
 
 		<ul class="dropdown-menu dropdown-menu-end">
 			<li class="dropdown-user-details">

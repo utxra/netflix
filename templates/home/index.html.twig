@@ -1,102 +1,364 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Home{% endblock %}
+{% block title %}Home
+{% endblock %}
 
 {% block stylesheets %}
-    {{ parent() }}
-    <link rel="stylesheet" href="{{ asset('css/base.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/home.css') }}">
+	{{ parent() }}
+	<link rel="stylesheet" href="{{ asset('css/base.css') }}">
+	<link rel="stylesheet" href="{{ asset('css/home.css') }}">
 
 {% endblock %}
 
 {% block body %}
-
-    <div class="card" style="width: 400px;">
-                <img src="{{ pelicula.image }}" class="card-img-top"  alt="Imagen {{ pelicula.title }}">
-                <div class="card-body">
-                    <section class="d-flex justify-content-between">
-                    <div>
-                        <a href=""><i class="bi bi-play-circle-fill card-icon"></i></a>
-                        <button class="bi bi-info-circle card-icon" style="color: black;" id="btn-abrir-info-peliculas-{{ pelicula.id }}"></button>
-                        <dialog id="info-peliculas-{{ pelicula.id }}" class="info">
-                        <div class="">
-                            <section class="netflix-home-video">
-                                <button class="btn-close btn-close-white btn-cerrar-info" id="btn-cerrar-info-peliculas-{{ pelicula.id }}"></button>
-                                <img src="{{ pelicula.image }}" style="width: 100%;">
-                                <div class="bottom"></div>
-                                <div class="content">
-                                <section class="left">
-                                    <h1 style="margin-top: 80%;" class="info-titulo">{{ pelicula.title }}</h1>
-                                    <div class="d-flex mt-2">
-                                    <a href=""><button class="btn btn-light m-2"> <i class="bi bi-play-fill" style="color: black; padding: 0%;"></i>
-                                        Reproducir </button></a>
-                                    </div>
-                                </section>
-                                </div>
-                            </section>
-                        </div>
-                        <div class="info-contenido m-5 row">
-                            <div class="col d-flex align-items-center">
-                                <h1>Sinopsis</h1>
-                                <div class="duracion">Fecha {{ pelicula.release_date }} ? min</div>
-                            </div>
-                            <div>
-                                <p style="text-align: justify;">{{ pelicula.description }}</p>
-                                <p><b>Reparto: </b> , etc.</p>
-                            </div>
-                        </div>
-                        </dialog>
-                    </div>
-                    <div>
-                        <a href="" download><i class="bi bi-arrow-down-circle card-icon"></i></a>
-                    </div>
-                    </section>
-                    <h1 style="color: white; font-size: 1.75rem;">{{ pelicula.title }}</h1>
-                    <section class="d-flex align-items-center justify-content-between">
-                    <p class="netflix-card-text m-0" style="color: rgb(0, 186, 0);">97% de coincidencia</p>
-                    <span class="m-2 netflix-card-text text-white">{{ pelicula.genres|join(', ') }}</span> <span
-                        class="border netflix-card-text p-1 text-white">HD</span>
-                    </section>
-        </div>
-    </div>
-                
-            <script>
-                const btnAbrirInfo_pelis_{{ pelicula.id }} = document.querySelector("#btn-abrir-info-peliculas-{{ pelicula.id }}");
-                const btnCerrarInfo_pelis_{{ pelicula.id }} = document.querySelector("#btn-cerrar-info-peliculas-{{ pelicula.id }}");
-                const info_pelis_{{ pelicula.id }} = document.querySelector("#info-peliculas-{{ pelicula.id }}");
-        
-                btnAbrirInfo_pelis_{{ pelicula.id }}.addEventListener("click", () => {
-                    info_pelis_{{ pelicula.id }}.showModal();
-                })
-        
-                btnCerrarInfo_pelis_{{ pelicula.id }}.addEventListener("click", () => {
-                    info_pelis_{{ pelicula.id }}.close();
-                })
-            </script>';
-    {% endfor %}
-    </div>
-
-    <h2 class="text-white">Series</h2>
-    <div class="container-fluid d-flex flex-wrap justify-content-center">
-    {% for serie in series %}
-        <div class="card">
-            <img src="{{ serie.image }}" width="200px" alt="Imagen {{ serie.title }}">
-            <div class="container">
-                <h4><b>{{ serie.title }}</b></h4>
-                <p>{{ serie.description }}</p>
-                <p>{{ serie.release_date }}</p>
-                <p>Géneros: {{ serie.genres|join(', ') }}</p>
-                <p>Num temporadas: {{ serie.number_of_seasons }}</p>
-                <p>Num episodios: {{ serie.number_of_episodes }}</p>
-                <h5>Temporadas</h5>
-                {% for temporada in serie.seasons %}
-                    <p>Temporada {{ temporada.season_number }}: {{ temporada.episode_count }} episodios - Air Date: {{ temporada.air_date }}</p>
-                {% endfor %}
+    <div style="banner-parent">
+        <div class="banner" style="background-image: linear-gradient(rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.35) 10%, rgba(0, 0, 0, 0.35) 80%, rgb(18, 18, 18) 100%), url('{{ banner_movie.image }}')">
+            <div class="banner-content">
+                <div>
+                    <img src="{{ banner_movie.logo }}" alt="Logo {{ banner_movie.title }}" class="banner-image">
+                </div>
             </div>
         </div>
-
-    {% endfor %}
     </div>
 
-{% endblock %}
+	<div class="movie-container">
+    <p class="titulo-seccion">Películas mejor valoradas ></p>
 
+	<div class="container-fluid d-flex flex-wrap justify-content-center px-xxl-5 px-xl-4 px-l-4">
+	
+    	{% for pelicula in top_rated_peliculas %}
+	
+    		<div class="card" id="card-peli-{{ pelicula.id }}">
+	
+    			<img src="{{ pelicula.image }}" class="card-img-top" alt="Imagen {{ pelicula.title }}">
+	
+    			<div class="card-body">
+	
+    				<section class="d-flex justify-content-between">
+                        <div>
+                            <p class="text-white" style="font-size: small;">
+                            Película
+                            </p>
+                        </div>
+                        <div>
+
+						</div>
+						<div>
+							<a href="" download>
+								<i class="bi bi-arrow-down-circle card-icon"></i>
+							</a>
+						</div>
+					</section>
+	
+    				<h1 style="color: white; font-size: 1.75rem;">{{ pelicula.title }}</h1>
+	
+    				<section class="d-flex align-items-center justify-content-between">
+
+                        <div class="puntuacion">
+    					    <div class="porcentaje">
+                                <p class="netflix-card-text m-0" style="color: rgb(0, 186, 0);">
+                                {{ pelicula.vote_average|number_format|round }}%</p>
+                            
+                            </div>
+                        </div>
+						
+                        <span class="m-2 netflix-card-text text-white">{{ pelicula.genres|join(' - ') }}</span>
+						<span class="border netflix-card-text p-1 text-white">HD</span>
+	
+    				</section>
+	
+    			</div>
+	
+    		</div>
+
+			{# <--! POP UP PELÍCULA --> #}
+            <dialog id="info-peliculas-{{ pelicula.id }}" class="info">
+		
+        		<div>
+		
+        			<section class="netflix-home-video">
+		
+        				<button class="btn-close btn-close-white btn-cerrar-info" id="btn-cerrar-info-peliculas-{{ pelicula.id }}"></button>
+						<img src="{{ pelicula.image }}" alt="Imagen {{ pelicula.title }}" style="width: 100%;">
+		
+        				<div class="content">
+		
+        					<section class="left">
+		
+        						<h3 class="info-titulo text-white">{{ pelicula.title }}</h3>
+		
+        						<div class="d-flex mt-2">
+									<a href="{{ path('app_player_movies', {'id': pelicula.id}) }}">
+										<button class="btn btn-light m-2">
+											<i class="fa-solid fa-play" style="color: black; padding: 0%;"></i>
+											Reproducir
+										</button>
+									</a>
+								</div>
+		
+        					</section>
+		
+        				</div>
+		
+        			</section>
+		
+        		</div>
+		
+        		<div class="info-contenido m-5 row">
+		
+        			<div class="col d-flex align-items-center">
+		
+        				<h3 class="text-white">Sinopsis</h3>
+		
+        				<div class="duracion">Fecha {{ pelicula.release_date }}</div>
+					
+                    </div>
+					
+                    <div>
+					
+                    	<p style="text-align: justify;">{{ pelicula.description }}</p>
+						<p>
+							<b>Reparto:
+							</b>
+							{% for member in pelicula.cast %}
+								{{ member.name }}
+								as
+								{{ member.character }}
+							{% endfor %}
+							, etc.
+                        </p>
+				
+                	</div>
+
+				</div>
+
+			</dialog>
+
+			<script>
+
+				const card_peli_{{ pelicula.id }} = document.querySelector("#card-peli-{{ pelicula.id }}");
+                const btnCerrarInfo_pelis_{{ pelicula.id }} = document.querySelector("#btn-cerrar-info-peliculas-{{ pelicula.id }}");
+                const info_pelis_{{ pelicula.id }} = document.querySelector("#info-peliculas-{{ pelicula.id }}");
+
+                card_peli_{{ pelicula.id }}.addEventListener("click", () => {
+                info_pelis_{{ pelicula.id }}.showModal();
+                })
+
+                btnCerrarInfo_pelis_{{ pelicula.id }}.addEventListener("click", () => {
+                info_pelis_{{ pelicula.id }}.close();
+                })
+
+			</script>
+		{% endfor %}
+	</div>
+    </div>
+
+	<p class="titulo-seccion mt-4">Series mejor valoradas ></p>
+
+	<div class="container-fluid d-flex flex-wrap justify-content-center px-xxl-5 px-xl-4 px-l-4">
+
+		{% for serie in top_rated_series %}
+
+			<div class="card" id="card-serie-{{ serie.id }}">
+
+				<img src="{{ serie.image }}" class="card-img-top" alt="Imagen{{ serie.title }}">
+
+				<div class="card-body">
+
+					<section class="d-flex justify-content-between">
+						<div>
+
+						</div>
+
+						<div>
+
+							<a href="" download>
+								<i class="bi bi-arrow-down-circle card-icon"></i>
+							</a>
+
+						</div>
+
+					</section>
+
+					<h2 style="color: white; font-size: 1.75rem;">{{ serie.title }}</h2>
+
+                    <p style="font-size: 0.75rem;color:#fff;margin:0;">Series</p>
+
+					<section class="d-flex align-items-center justify-content-between">
+
+						 <div class="puntuacion">
+    					    
+                            <div class="porcentaje">
+                            
+                                <p class="netflix-card-text m-0" style="color: rgb(0, 186, 0);">
+                                {{ serie.vote_average|number_format|round }}%</p>
+                            
+                            </div>
+                        
+                        </div>
+						
+                        <span class="m-2 netflix-card-text text-white">{{ serie.genres|join(' - ') }}</span>
+
+						<span class="border netflix-card-text p-1 text-white">HD</span>
+
+					</section>
+
+				</div>
+
+			</div>
+
+			{# <--! POP UP SERIE --> #}
+			<dialog id="info-series-{{ serie.id }}" class="info">
+
+				<div>
+
+					<section class="netflix-home-video">
+
+						<button class="btn-close btn-close-white btn-cerrar-info" id="btn-cerrar-info-series-{{ serie.id }}"></button>
+
+						<img src="{{ serie.image }}" style="width: 100%;">
+
+						<div class="content">
+
+							<section class="left">
+
+								<h3 class="info-titulo text-white">{{ serie.title }}</h3>
+
+								<div class="d-flex mt-2">
+
+									<a href="">
+										<button class="btn btn-light m-2">
+											<i class="bi bi-play-fill" style="color: black; padding: 0%;"></i>
+											Reproducir
+										</button>
+									</a>
+
+								</div>
+
+							</section>
+
+						</div>
+
+					</section>
+
+				</div>
+
+				<div class="info-contenido m-5 row">
+
+					<div class="col d-flex align-items-center">
+
+						<h3 class="text-white">Sinopsis</h3>
+
+						<div class="duracion">Fecha {{ serie.release_date }}</div>
+
+					</div>
+
+					<div>
+
+						<p style="text-align: justify;">{{ serie.description }}</p>
+						<p>
+							<b>Reparto:
+							</b>
+							{% for member in serie.cast %}
+								{{ member.name }}
+								as
+								{{ member.character }}
+							{% endfor %}
+							, etc.
+                        </p>
+
+					</div>
+
+                    <div>
+                    
+                        <p>
+                            <b>Temporadas:
+                            </b>
+                            {{ serie.seasons|length }}
+                        </p>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label for="seasonSelector">Selecciona una Temporada:</label>
+                        <select id="seasonSelector" class="form-control">
+                            <option value="">--Selecciona una Temporada--</option>
+                            {% for season in serie.seasons %}
+                                <option value="{{ season.id }}">{{ season.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div id="episodesList" class="mt-4">
+                        <!-- Aquí se mostrarán los episodios -->
+                    </div>
+                    <div id="debugArea" class="mt-4">
+                        <!-- Área de depuración -->
+                    </div>
+                    </div>
+
+                    <script>
+                        $(document).ready(function() {
+                            $('#seasonSelector').change(function() {
+                                var seasonId = $(this).val();
+                                if (seasonId) {
+                                    $.ajax({
+                                        url: '{{ path("get_episodes") }}', // Ruta a la acción que devuelve los episodios
+                                        type: 'GET',
+                                        data: { seasonId: seasonId },
+                                        success: function(response) {
+                                            var episodes = response.episodes;
+                                            var html = '<h3>Episodios</h3>';
+                                            if (episodes.length > 0) {
+                                                html += '<ul class="list-group">';
+                                                episodes.forEach(function(episode) {
+                                                    html += '<li class="list-group-item">';
+                                                    html += '<strong>' + episode.name + '</strong><br>';
+                                                    html += episode.overview;
+                                                    html += '</li>';
+                                                });
+                                                html += '</ul>';
+                                            } else {
+                                                html += '<p>No hay episodios disponibles para esta temporada.</p>';
+                                            }
+                                            $('#episodesList').html(html);
+                                        },
+                                        error: function() {
+                                            $('#episodesList').html('<p>Hubo un error al cargar los episodios. Por favor, intenta nuevamente.</p>');
+                                            $('#debugArea').html('<pre>' + xhr.responseText + '</pre>');
+                                        }
+                                    });
+                                } else {
+                                    $('#episodesList').html('');
+                                }
+                            });
+                        });
+                    </script>
+
+                </div>
+
+			</dialog>
+
+			<script>
+
+				const card_serie_{{ serie.id }} = document.querySelector("#card-serie-{{ serie.id }}");
+                const btnCerrarInfo_series_{{ serie.id }} = document.querySelector("#btn-cerrar-info-series-{{ serie.id }}");
+                const info_series_{{ serie.id }} = document.querySelector("#info-series-{{ serie.id }}");
+
+                card_serie_{{ serie.id }}.addEventListener("click", () => {
+                info_series_{{ serie.id }}.showModal();
+                })
+
+                btnCerrarInfo_series_{{ serie.id }}.addEventListener("click", () => {
+                info_series_{{ serie.id }}.close();
+                console.log("cerrar");
+                })
+
+            </script>
+		{% endfor %}
+
+	</div>
+
+	{% include "_footer.html.twig" %}
+
+{% endblock %}

@@ -16,7 +16,7 @@ body {
 }
 
 .netflix-navbar {
-	/* background-color: #0C0C0C !important; */
+	/* background-color: #141414 !important; */
 	z-index: 1000;
 	transition: background 0.2s linear;
 	position: fixed;

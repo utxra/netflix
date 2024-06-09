@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello PlayerController!{% endblock %}
+
+{% block stylesheets %}
+{{ parent() }}
+    <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
+    <link rel="stylesheet" href="{{ asset('css/player.css') }}">
+{% endblock %}
+
+{% block body %}
+
+{% block header %}
+
+{% endblock %}
+
+<div class="plyr__video-embed" id="player">
+  <iframe
+    src="https://www.youtube.com/embed/{{ video }}?autoplay=1"
+    allowfullscreen
+    allowtransparency
+    allow="autoplay"
+  ></iframe>
+</div>
+
+<script src="https://cdn.plyr.io/3.7.8/plyr.polyfilled.js"></script>
+<script>
+  const player = new Plyr('#player');
+</script>
+
+{% endblock %}
