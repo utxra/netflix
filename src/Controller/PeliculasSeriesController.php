@@ -36,7 +36,7 @@ class PeliculasSeriesController extends AbstractController
                 'top_rated_peliculas' => $this->homeService->get_top_movies(10),
                 'now_playing_peliculas' => $this->homeService->get_now_playing_movies(10),
                 'banner_movie' => $this->homeService->get_banner_movie(),
-                'popular_peliculas' => $this->homeService->get_popular_movies(10),
+                // 'popular_peliculas' => $this->homeService->get_popular_movies(10),
             ]),
             $user->getIsVerified() === false => $this->redirectToRoute('app_not_verified_email'),
         };
@@ -59,7 +59,7 @@ class PeliculasSeriesController extends AbstractController
             $user->getIsVerified() => $this->render('series/index.html.twig', [
                 'avatar' => $user->getAvatarUrl(),
                 'top_rated_series' => $this->homeService->get_series(10),
-                'popular_series' => $this->homeService->get_popular_series(10),
+                // 'popular_series' => $this->homeService->get_popular_series(10),
                 'on_the_air_series' => $this->homeService->get_on_the_air_series(10),
                 'banner_serie' => $this->homeService->get_banner_serie(),
             ]),

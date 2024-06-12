@@ -144,7 +144,8 @@ a:visited:active {
 }
 
 .btn-cerrar-info {
-	position: fixed;
+	position: absolute;
+	transform: scale(1.6);
 	top: 10px;
 	right: 10px;
 	z-index: 9999;
@@ -298,3 +299,4 @@ a:visited:active {
 		font-size: 12px;
 	}
 }
+

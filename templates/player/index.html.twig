@@ -6,6 +6,39 @@
 {{ parent() }}
     <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
     <link rel="stylesheet" href="{{ asset('css/player.css') }}">
+    <style>
+        .back_button {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            z-index: 1000;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px;
+            cursor: pointer;
+            display: flex;
+            width: 100vw;
+            align-items: center;
+        }
+
+        .nav-control {
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0));
+            color: white;
+            padding: 10px;
+            text-align: left;
+            display: block;
+            transition: 0.3s;
+            font-size: 300%;
+            width: 100vw;
+            z-index: 1000;
+        }
+
+    </style>
 {% endblock %}
 
 {% block body %}
@@ -13,6 +46,8 @@
 {% block header %}
 
 {% endblock %}
+
+<div class="nav-control"><button class="back_button" onclick="history.back()"><i class="fa-solid fa-chevron-left"></i>Volver</button></div>
 
 <div class="plyr__video-embed" id="player">
   <iframe
