@@ -17,6 +17,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\RadioType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Validator\Constraints\Regex;
 
 use function PHPSTORM_META\type;
 use function PHPUnit\Framework\stringContains;
@@ -94,6 +95,9 @@ class RegistrationFormType extends AbstractType
                             // max length allowed by Symfony for security reasons
                             'max' => 24,
                         ]),
+                        new Regex([
+                            'pattern' => '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&.])[A-Za-z\d@$!%*?&.]{8,}$/',
+                            'message' => 'La contraseña debe tener al menos una letra mayúscula, una letra minúscula, un número y un carácter especial.',])
                     ],
                 ],
                 'second_options' => [
