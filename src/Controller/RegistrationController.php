@@ -80,7 +80,7 @@ class RegistrationController extends AbstractController
                 'email' => $user->getEmail(),
             ]);
 
-            $resend = Resend::client('re_TPPKWAXB_54DKvHzkZi2PArJyAabbQF4C');
+            $resend = Resend::client(RESEND_API);
             
             
             $result = $resend->emails->send([
